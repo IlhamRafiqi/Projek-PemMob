@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Konsultasi Kesehatan Mental</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url(assets/images/cuy.jpeg);
+        }
+        .chat-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 50%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: #0088cc; 
+            border: 1px solid #007bb2; 
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transform: translate(-50%, -50%);
+            
+        }
+        .chat-header {
+            background: #007bb2;
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .chat-header .avatar {
+            width: 35px;
+            height: 35px;
+            background: #fff;
+            color: #007bb2;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        .chat-header .avatar img {
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            border-radius: 50%;
+        }
+        .chat-box {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px; 
+        }
+        .chat-box .message {
+            margin: 5px 0;
+            max-width: 80%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            line-height: 1.4;
+            position: relative;
+        }
+        .chat-box .user {
+            align-self: flex-end;
+            background: #dcf8c6;
+            border-bottom-right-radius: 0;
+        }
+        .chat-box .bot {
+            align-self: flex-start;
+            background: #ffffff;
+            border-bottom-left-radius: 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background: #ffffff;
+            align-items: center;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+        .chat-input button {
+            padding: 8px 10px;
+            background: #007bb2;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1em; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-input button:hover {
+            background: #007bb2;
+        }
+    </style>
+</head>
+<body>
+    <!-- Chat Popup -->
+    <div class="chat-popup" id="chatPopup">
+        <div class="chat-header">
+                <div class="avatar" id="doctorAvatar">
+                    <img src="" alt="Avatar" id="doctorImage">
+                </div>
+                <span id="doctorName"></span>  
+        </div>
+
+        <div class="chat-box" id="chatBox">
+            <!-- Chat messages  -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatMessage" placeholder="Ketik pesan..." />
+            <button onclick="sendMessage()">&#10148;</button>
+        </div>
+    </div>
+
+    <script>
+        // Ambil parameter nama dokter dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const doctorNameFromURL = urlParams.get('doctor');
+
+        // Daftar gambar dan nama dokter yang dapat dipilih
+        const doctorDetails = {
+            "maya": {
+                name: "Dr. Maya Santaso",
+                avatar: "assets/images/psikolog2.jpeg" 
+            },
+            "gaby": {
+                name: "Dr. Gaby Corella",
+                avatar: "assets/images/psikolog7.png" 
+            },
+            "cindy": {
+                name: "Dr. Cindy Wijaya",
+                avatar: "assets/images/psikolog3.jpeg" 
+            },
+            "jennifer": {
+                name: "Dr. Jennifer Connelly",
+                avatar: "assets/images/psikolog4.jpeg" 
+            },
+            "budi": {
+                name: "Dr. Budi Prasetyo",
+                avatar: "assets/images/psikolog5.jpeg" 
+            },
+            "anna": {
+                name: "Dr. Anna Susanti",
+                avatar: "assets/images/psikolog6.png" 
+            }
+        };
+
+        // Ambil elemen untuk nama dokter dan gambar avatar
+        const doctorAvatar = document.getElementById("doctorAvatar");
+        const doctorImage = document.getElementById("doctorImage");
+        const doctorNameElement = document.getElementById("doctorName");
+
+        if (doctorNameFromURL && doctorDetails[doctorNameFromURL.toLowerCase()]) {
+            // Mengatur gambar avatar dan nama dokter
+            const doctor = doctorDetails[doctorNameFromURL.toLowerCase()];
+            doctorImage.src = doctor.avatar;  // Mengatur gambar avatar
+            doctorNameElement.innerText = doctor.name;  // Mengatur nama dokter
+        } else {
+            // Default jika dokter tidak ditemukan
+            doctorImage.src = "assets/images/default-avatar.png"; // Gambar default jika tidak ada dokter yang dipilih
+            doctorNameElement.innerText = "Kesehatan Mental"; // Default teks nama dokter
+        }
+
+        const chatBox = document.getElementById("chatBox");
+
+        // Fungsi untuk mengirim pesan
+        function sendMessage() {
+            const input = document.getElementById("chatMessage");
+            const message = input.value.trim();
+
+            if (message) {
+                // Tambahkan pesan pengguna
+                const userMessage = document.createElement("div");
+                userMessage.className = "message user";
+                userMessage.innerText = message;
+                chatBox.appendChild(userMessage);
+
+                // Bersihkan input
+                input.value = "";
+
+                // Respon simulasi dari konsultan
+                setTimeout(() => {
+                    const botMessage = document.createElement("div");
+                    botMessage.className = "message bot";
+                    let response;
+
+                    // Respon otomatis berdasarkan input
+                    if (message.toLowerCase().includes("stres")) {
+                        response = "Saya paham, stres bisa sangat menguras energi. Cobalah teknik pernapasan dalam, atau mungkin berjalan-jalan untuk meredakan ketegangan.";
+                    } else if (message.toLowerCase().includes("cemas")) {
+                        response = "Cemas adalah hal yang biasa, tetapi perlu dikelola dengan baik. Bagaimana jika Anda mencoba meditasi atau berbicara dengan seseorang yang Anda percayai?";
+                    } else if (message.toLowerCase().includes("depresi")) {
+                        response = "Depresi bisa sangat sulit. Pertimbangkan untuk mencari dukungan profesional. Anda tidak sendirian dalam hal ini.";
+                    } else if (message.toLowerCase().includes("hallo") || message.toLowerCase().includes("hai")) {
+                        response = "Hallo, Apakah ada yang bisa saya bantu!";
+                    } else if (message.toLowerCase().includes("kecemasan")) {
+                        response = "Kecemasan bisa mempengaruhi banyak aspek kehidupan. Cobalah untuk fokus pada pernapasan atau teknik grounding, seperti merasakan benda di sekitar Anda untuk kembali ke momen sekarang.";
+                    } else if (message.toLowerCase().includes("overthinking")) {
+                        response = "Overthinking bisa membuat kita terjebak dalam pikiran negatif. Cobalah untuk menulis perasaan Anda, atau ambil waktu untuk melakukan hal-hal yang membuat Anda merasa tenang dan terhubung dengan diri sendiri.";
+                    } else if (message.toLowerCase().includes("burnout")) {
+                        response = "Burnout bisa terjadi saat kita merasa terlalu banyak tekanan. Penting untuk istirahat dan mengatur waktu untuk diri sendiri. Cobalah untuk mengurangi kegiatan yang memberi stres berlebih.";
+                    } else if (message.toLowerCase().includes("sakit jiwa")) {
+                        response = "Sakit jiwa adalah hal yang sering terjadi, dan sama pentingnya dengan masalah fisik. Jangan ragu untuk mencari dukungan dari tenaga medis atau seorang konselor.";
+                    } else if (message.toLowerCase().includes("trauma")) {
+                        response = "Trauma bisa memengaruhi kita dalam berbagai cara. Ini bisa memerlukan waktu untuk sembuh, dan dukungan dari orang yang bisa dipercaya atau seorang profesional dapat sangat membantu.";
+                    } else if (message.toLowerCase().includes("rasa kesepian")) {
+                        response = "Kesepian adalah perasaan yang bisa sangat menguras. Cobalah untuk terhubung dengan seseorang yang bisa Anda percayai, atau lakukan aktivitas yang Anda nikmati.";
+                    } else if (message.toLowerCase().includes("mood swings")) {
+                        response = "Mood swings dapat dipengaruhi oleh berbagai faktor, seperti stres, pola tidur, atau masalah kesehatan mental lainnya. Pastikan Anda cukup tidur, makan dengan baik, dan berbicara dengan seseorang jika Anda merasa perlu.";
+                    } else if (message.toLowerCase().includes("self-harm")) {
+                        response = "Saya sangat menyesal mendengar itu. Self-harm bukanlah cara yang sehat untuk mengatasi rasa sakit. Jika Anda merasa kesulitan, berbicaralah dengan seorang profesional atau seseorang yang Anda percayai untuk mendapatkan dukungan.";
+                    } else if (message.toLowerCase().includes("suicidal thoughts")) {
+                        response = "Saya sangat peduli dengan Anda. Jika Anda merasa ingin melukai diri sendiri, sangat penting untuk mencari bantuan. Jangan ragu untuk menghubungi layanan darurat atau seorang konselor yang dapat mendukung Anda.";
+                    } else if (message.toLowerCase().includes("depression")) {
+                        response = "Depresi bisa sangat sulit. Pertimbangkan untuk mencari dukungan profesional. Anda tidak sendirian dalam hal ini.";
+                    } else if (message.toLowerCase().includes("halo", "hai", "hallo", "hi")) {
+                        response = "Hallo, Apakah ada yang bisa saya bantu?";
+                    } else if (message.toLowerCase().includes("mati", "bunuh diri")){
+                        response = "Saya sangat peduli dengan Anda dan sangat menyesal mendengar perasaan Anda saat ini. Namun, Anda tidak sendirian, dan ada banyak orang yang peduli serta siap membantu. Sangat penting untuk berbicara dengan seseorang yang bisa mendukung Anda, seperti seorang konselor atau layanan darurat. Tolong pertimbangkan untuk mencari bantuan, karena Anda layak mendapatkan dukungan untuk mengatasi perasaan ini.";
+                    } else if (message.toLowerCase().includes("terimakasih", "terima kasih")) {
+                        response = "Terima kasih telah berbagi. Jika ada hal lain yang ingin dibicarakan, saya di sini untuk membantu.";
+                    } else if(message.toLowerCase().includes("gila")){
+                        response = "Saya sangat menyesal mendengar perasaan Anda saat ini. Merasa seperti itu bisa sangat berat, tetapi itu tidak berarti Anda gila. Banyak orang yang merasa kesulitan dan memerlukan dukungan. Cobalah untuk berbicara dengan seseorang yang bisa membantu, seperti seorang konselor atau dokter. Menghadapi perasaan ini bukanlah sesuatu yang harus Anda lakukan sendirian.";
+                    } else {
+                        response = "Apakah ada yang bisa saya bantu?";
+                    } 
+
+                    botMessage.innerText = response;
+                    chatBox.appendChild(botMessage);
+
+                    // Scroll ke bawah
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>

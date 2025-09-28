@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sejenak - Info</title>
+    <meta name="title" content="Card Example">
+    <meta name="description" content="Description of the card example">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Rubik:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        /* CSS for Card Section */
+        .card-section {
+            padding: 40px 0;
+        }
+
+        .heroes {
+            margin-bottom: -30px;
+            background-color: #0056b3;
+        }
+
+        .hero {
+            height: 100%;
+            max-height: 100%;
+        }
+
+        .headline-md {
+            margin-top: 30px;
+            margin-bottom: 50px;
+            animation: fadeInLeft 1s ease-in-out
+        }
+
+        .section-artikel {
+            width: 100%;
+            position: relative;
+            animation: fadeInLeft 1s ease-in-out;
+        }
+
+        .section-artikel:before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            height: 4px;
+            width: 145px;
+            border-radius: 3px;
+            z-index: 2;
+            background-color: var(--midnight-blue);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background-color: #fff;
+            transition: transform 0.3s;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            font-size: 1em;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .card-link {
+            font-size: 1em;
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .card-link:hover {
+            color: #0056b3;
+        }
+
+        .stats {
+            color: #939393;
+            margin-top: -20px;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotateNeedle {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(calc(var(--score) * 1.8deg - 90deg));
+            }
+        }
+        .btn-chat {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #007bb2;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-chat:hover {
+            background-color: #007bb2;
+        }
+
+    </style>
+</head>
+
+<body id="top">
+
+    <!-- Header -->
+    <header class="header" data-header>
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="assets/images/logo_sejenak-removebg-preview.png" width="100" height="100" alt="sejenak">
+            </a>
+            <nav class="navbar" data-navbar>
+                <div class="navbar-top">
+                    <a href="#" class="logo">
+                        <img src="assets/images/arti.png" width="100" height="80" alt="Arti home">
+                    </a>
+                    <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+                        <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+                    </button>
+                </div>
+                <ul class="navbar-list">
+                    <li class="navbar-item"><a href="index.html" class="navbar-link title-md">Beranda</a></li>
+                    <li class="navbar-item"><a href="artikel.html" class="navbar-link title-md">Artikel</a></li>
+                    <li class="navbar-item"><a href="info.html" class="navbar-link title-md active">Info</a></li>
+                    <li class="navbar-item"><a href="aboutus.html" class="navbar-link title-md">Tentang Kami</a></li>
+                    <li class="navbar-item"><a href="#kontak" class="navbar-link title-md">Kontak</a></li>
+                </ul>
+            </nav>
+            <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+                <ion-icon name="menu-outline"></ion-icon>
+            </button>
+            <a href="login.html" class="btn has-before title-md">Login</a>
+            <div class="overlay" data-nav-toggler data-overlay></div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="section heroes" style="background-image: url('assets/images/hero-bg.png');" aria-label="home">
+        <div class="containers">
+        </div>
+    </section>
+
+    <!-- Card Section -->
+    <main class="section card-section">
+        <div class="container">
+            <h2 class="headline-md" style="font-size: 30px;">Info Psikolog</h2>
+            <span class="section-artikel"></span>
+            <div class="card-grid">
+                <!-- Card 1 -->
+                <div class="card">
+                    <!-- Wrap card in <a> tag for navigation -->
+                        <figure class="card-banner">
+                            <img src="assets/images/psikolog2.jpeg" alt="Card Image" class="w-100">
+                        </figure>
+                        <div class="card-content">
+                            <h2 class="card-title">Dr. Maya Santaso</h2>
+                            <p class="stats">Psikolog Pendidikan • RS Vania Bogor</p>
+                            <p class="card-description " style="font-family: var(--ff-Oswald);">"Fokus pada terapi remaja dan sering memberikan workshop dan seminar tentang kesehatan mental remaja"</p>
+                            <!-- Add Chat Button -->
+                            <a href="chat.html?doctor=maya" class="btn-chat">Chat Now</a>
+                        </div>
+                    </a>
+                </div>
+    
+                <!-- Card 2 -->
+                <div class="card">
+                        <figure class="card-banner">
+                            <img src="assets/images/psikolog7.png" alt="Card Image" class="w-100">
+                        </figure>
+                        <div class="card-content">
+                            <h2 class="card-title">Dr. Gaby Corella</h2>
+                            <p class="stats">Psikolog Remaja • RS Melania Bogor</p>
+                            <p class="card-description" style="font-family: var(--ff-Oswald);">"Saya berfokus untuk menangani kekhawatiran pada remaja yang menuju usia dewasa"</p>
+                            <!-- Add Chat Button -->
+                            <a href="chat.html?doctor=gaby" class="btn-chat">Chat Now</a>
+                        </div>
+                    </a>
+                </div>
+    
+                <!-- Card 3 -->
+                <div class="card">
+                        <figure class="card-banner">
+                            <img src="assets/images/psikolog3.jpeg" alt="Card Image" class="w-100">
+                        </figure>
+                        <div class="card-content">
+                            <h2 class="card-title">Dr. Cindy Wijaya</h2>
+                            <p class="stats">Psikolog Perkawinan • RS UMMI Bogor</p>
+                            <p class="card-description" style="font-family: var(--ff-Oswald);">"Saya bekerja dengan pasangan untuk mengatasi stres relasional dan meningkatkan komunikasi."</p>
+                            <!-- Add Chat Button -->
+                            <a href="chat.html?doctor=cindy" class="btn-chat">Chat Now</a>
+                        </div>
+                    </a>
+                </div>
+    
+                <!-- Card 4 -->
+                <div class="card">
+                        <figure class="card-banner">
+                            <img src="assets/images/psikolog4.jpeg" alt="Card Image" class="w-100">
+                        </figure>
+                        <div class="card-content">
+                            <h2 class="card-title">Dr. Jennifer Connelly</h2>
+                            <p class="stats">Psikologi Sosial • RS Hermina Bogor</p>
+                            <p class="card-description" style="font-family: var(--ff-Oswald);">"Saya mempelajari tingkah laku manusia dalam kaitannya dengan lingkungan."</p>
+                            <!-- Add Chat Button -->
+                            <a href="chat.html?doctor=jennifer" class="btn-chat">Chat Now</a>
+                        </div>
+                    </a>
+                </div>
+    
+                <!-- Card 5 -->
+                <div class="card">
+                        <figure class="card-banner">
+                            <img src="assets/images/psikolog5.jpeg" alt="Card Image" class="w-100">
+                        </figure>
+                        <div class="card-content">
+                            <h2 class="card-title">Dr. Budi Prasetyo</h2>
+                            <p class="stats">Psikolog Anak dan Remaja • RS PMI Bogor</p>
+                            <p class="card-description" style="font-family: var(--ff-Oswald);">"Berpengalaman dalam membantu individu muda mengelola stres dan tekanan yang mereka hadapi."</p>
+                            <!-- Add Chat Button -->
+                            <a href="chat.html?doctor=budi" class="btn-chat">Chat Now</a>
+                        </div>
+                    </a>
+                </div>
+    
+                <!-- Card 6 -->
+                <div class="card">
+                        <figure class="card-banner">
+                            <img src="assets/images/psikolog6.png" alt="Card Image" class="w-100">
+                        </figure>
+                        <div class="card-content">
+                            <h2 class="card-title">Dr. Anna Susanti</h2>
+                            <p class="stats">Psikolog Klinis • RS BMC Bogor</p>
+                            <p class="card-description" style="font-family: var(--ff-Oswald);">"Spesialis dalam terapi kognitif-perilaku dan konseling stres."</p>
+                            <!-- Add Chat Button -->
+                            <a href="chat.html?doctor=anna" class="btn-chat">Chat Now</a>
+                        </div>
+                    </a>
+                </div>
+            </div>
+    
+
+        <h2 class="headline-md" style="font-size: 30px;">Info Obat</h2>
+        <span class="section-artikel"></span>
+        <div class="card-grid">
+            <div class="card">
+                <figure class="card-banner">
+                    <img src="assets/images/obat1.jpg" alt="Card Image" class="w-100">
+                </figure>
+                <div class="card-content">
+                    <h2 class="card-title">Buspiron</h2>
+                    <p class="card-description" style="font-family: var(--ff-Oswald);">Obat untuk mengatasi gangguan kecemasan umum. Obat ini dapat meredakan gejala kecemasan, seperti gelisah, mudah tersinggung, pusing, sulit tidur, atau jantung berdebar-debar.</p>
+                    <a href="detail12.html" class="card-link">Read More</a>
+                </div>
+            </div>
+            <div class="card">
+                <figure class="card-banner">
+                    <img src="assets/images/obat2.jpg" alt="Card Image" class="w-100">
+                </figure>
+                <div class="card-content">
+                    <h2 class="card-title">Antidepresan</h2>
+                    <p class="card-description" style="font-family: var(--ff-Oswald);">Obat antidepresan yang paling umum diresepkan oleh dokter sebagai penanganan awal adalah obat golongan selective serotonin reuptake inhibitors (SSRIs).</p>
+                    <a href="detail13.html" class="card-link">Read More</a>
+                </div>
+            </div>
+            <div class="card">
+                <figure class="card-banner">
+                    <img src="assets/images/obat3.jpeg" alt="Card Image" class="w-100">
+                </figure>
+                <div class="card-content">
+                    <h2 class="card-title">Aripiprazole</h2>
+                    <p class="card-description" style="font-family: var(--ff-Oswald);">Obat antipsikotik untuk meredakan gejala gangguan mental berat yang disebut skizofrenia. Obat ini juga bisa digunakan dalam pengobatan gangguan bipolar atau depresi berat.</p>
+                    <a href="detail14.html" class="card-link">Read More</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mindfulness Section -->
+        <h2 class="headline-md" style="font-size: 30px;">Mindfulness</h2>
+        <span class="section-artikel"></span>
+        <div class="card-grid">
+            <!-- Card 1 -->
+            <div class="card">
+                <figure class="card-banner">
+                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/3lWja7H9_Zw?autoplay=1&mute=0&si=QpZDu2sRL3A1aXkS" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </figure>
+                <div class="card-content">
+                    <h2 class="card-title">Gangguan Kesehatan Mental</h2>
+                    <p class="card-description" style="font-family: var(--ff-Oswald);">Dalam menjaga kesehatan, tak melulu soal kesehatan fisik atau jasmani saja, tapi juga perlu perhatikan kesehatan mental. Kapan bisa disebut sehat mental? Ketika seseorang mampu untuk mengontrol stres dengan wajar, produktif, dan berperan aktif. Kira-kira apa saja yang menyebabkan gangguan kesehatan mental?</p>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="card">
+                <figure class="card-banner">
+                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/wIiUxN5sE7Y?autoplay=1&mute=0&si=kwHiiPcNGS5fLADa" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </figure>
+                <div class="card-content">
+                    <h2 class="card-title">Apa itu Mindfulness?</h2>
+                    <p class="card-description" style="font-family: var(--ff-Oswald);">Dengan mindfulness hidup lebih sehat & bahagia. Apa itu Mindfulness? Ikuti video ini untuk mengetahui lebih lanjut dan mulai menerapkannya dalam kehidupan sehari-hari!</p>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="card">
+                <figure class="card-banner">
+                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/ssss7V1_eyA?autoplay=1&mute=0&si=aFMdEIA3aAQx5qlM" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </figure>
+                <div class="card-content">
+                    <h2 class="card-title">Meditasi Mindfulness</h2>
+                    <p class="card-description" style="font-family: var(--ff-Oswald);">Bagi kamu yang sering mengalami banyak pikiran atau overthinking, video kali ini cocok banget buat kamu! Meditasi ini dapat menenangkan pikiran dan batinmu. Setelah melakukan teknik meditasi ini, kamu akan mulai merasakan perubahannya. Lakukan 3-5 kali sehari, terutama setelah bangun dan sebelum tidur. Selamat mencoba!</p>
+                </div>
+            </div>
+        </div>
+    </div> 
+</main>
+
+
+    <!-- Footer -->
+    <footer id="kontak" class="footer" style="background-image: url('assets/images/footer-bg.png')">
+        <div class="container">
+            <div class="section footer-top">
+                <div class="footer-brand" data-reveal="bottom">
+                    <a href="#" class="logo">
+                        <img src="assets/images/logo_sejenak-removebg-preview.png" width="136" height="46" loading="lazy"
+                            alt="Doclab home">
+                    </a>
+                    <ul class="contact-list has-after">
+                        <li class="contact-item">
+                            <div class="item-icon">
+                                <ion-icon name="mail-open-outline"></ion-icon>
+                            </div>
+                            <div>
+                                <p>Main Email : <a href="mailto:contact@website.com"
+                                        class="contact-link">contact@&shy;website.com</a></p>
+                                <p>Inquiries : <a href="mailto:Info@mail.com" class="contact-link">Info@mail.com</a></p>
+                            </div>
+                        </li>
+                        <li class="contact-item">
+                            <div class="item-icon">
+                                <ion-icon name="call-outline"></ion-icon>
+                            </div>
+                            <div>
+                                <p>Office Telephone : <a href="tel:021316473969" class="contact-link">021316473969</a>
+                                </p>
+                                <p>Mobile : <a href="tel:081316473969" class="contact-link">081316473969</a></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="footer-list" data-reveal="bottom">
+                    <li>
+                        <p class="headline-sm footer-list-title">Program</p>
+                    </li>
+                    <li><a href="#" class="text footer-link">Pertanyaan yang Sering Diajukan</a></li>
+                    <li><a href="#" class="text footer-link">Untuk Perawatan Kesehatan</a></li>
+                    <li><a href="#" class="text footer-link">Untuk Perusahaan</a></li>
+                    <li><a href="#" class="text footer-link">Test Stress Anda</a></li>
+                </ul>
+                <ul class="footer-list" data-reveal="bottom">
+                    <li>
+                        <p class="headline-sm footer-list-title">Perusahaan</p>
+                    </li>
+                    <li><a href="#" class="text footer-link">Kesehatan Pikiran Sehat</a></li>
+                    <li><a href="#" class="text footer-link">Standar Peraturan</a></li>
+                    <li><a href="#" class="text footer-link">Tentang Kami</a></li>
+                </ul>
+                <ul class="footer-list" data-reveal="bottom">
+                    <li>
+                        <p class="headline-sm footer-list-title">Support</p>
+                    </li>
+                    <li><a href="#" class="text footer-link">Syarat dan Ketentuan</a></li>
+                    <li><a href="#" class="text footer-link">Kebijakan pribadi</a></li>
+                    <li><a href="#" class="text footer-link">Pernyataan Aksesibilitas</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p class="text copyright">
+                    &copy; Sejenak 2024 | All Rights Reserved by Sejenak
+                </p>
+                <ul class="social-list">
+                    <li><a href="https://www.facebook.com" class="social-link" target="_blank">
+                      <ion-icon name="logo-facebook"></ion-icon>
+                    </a></li>
+                    
+                    <li><a href="https://www.twitter.com" class="social-link" target="_blank">
+                      <ion-icon name="logo-twitter"></ion-icon>
+                    </a></li>
+                    
+                    <li><a href="https://www.google.com" class="social-link" target="_blank">
+                      <ion-icon name="logo-google"></ion-icon>
+                    </a></li>
+                    
+                    <li><a href="https://www.linkedin.com" class="social-link" target="_blank">
+                      <ion-icon name="logo-linkedin"></ion-icon>
+                    </a></li>
+                    
+                    <li><a href="https://www.pinterest.com" class="social-link" target="_blank">
+                      <ion-icon name="logo-pinterest"></ion-icon>
+                    </a></li>
+                  </ul>
+                  
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+        <ion-icon name="chevron-up"></ion-icon>
+    </a>
+
+    <!-- Custom JS Link -->
+    <script src="assets/js/script.js"></script>
+    <!-- Ionicon Link -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+
+</body>
+</html>

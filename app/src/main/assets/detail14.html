@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Example</title>
+    <meta name="title" content="Card Example">
+    <meta name="description" content="Description of the card example">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Rubik:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        .header {
+            background-color: #0056b3;
+        }
+
+        .card-section {
+            padding: 40px 0;
+        }
+
+        /* Styling untuk .heroes */
+        .heroes {
+            position: relative;
+            margin-bottom: 0;
+            /* Reset margin bottom */
+            background-color: #ffffff;
+        }
+
+        .heroes img {
+            width: 100%;
+            height: 60vh;
+            object-fit: cover;
+        }
+
+        .containers {
+            position: relative;
+            /* Tetap di tempat saat scroll */
+            top: -150px;
+            /* Jarak dari atas halaman, sesuaikan sesuai kebutuhan */
+            left: 50%;
+            transform: translateX(-50%);
+            /* Tengah-tengah secara horizontal */
+            width: 80%;
+            height: 35vh;
+            max-width: 900px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .social-list1 {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-link1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            color: #333;
+            font-size: 1.2em;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .social-link1:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .hero-title {
+            text-align: start;
+            color: #555;
+            font-size: 2.5em;
+            z-index: 4;
+            margin-bottom: 90px;
+        }
+
+        .sub-hero {
+            margin-top: -90px;
+        }
+
+        /* Styling untuk informasi artikel */
+        .article-info {
+            background-color: #f9f9f9;
+            padding: 40px 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 900px;
+            position: relative;
+            top: -150px;
+            height: auto;
+            max-height: max-content;
+            margin-bottom: -200px;
+        }
+
+        .info-title {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .info-text {
+            text-align: justify;
+            font-size: 1.2em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .info-list {
+            list-style-type: decimal;
+            padding-left: 20px;
+            margin-bottom: 20px;
+            text-align: justify;
+            font-size: 1.2em;
+        }
+
+        .info-list li {
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .info-title {
+                font-size: 1.5em;
+            }
+
+            .info-text {
+                text-align: justify;
+            }
+        }
+
+
+        .headline-md {
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .section-artikel {
+            width: 100%;
+            position: relative;
+        }
+
+        .section-artikel:before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            height: 4px;
+            width: 145px;
+            border-radius: 3px;
+            z-index: 2;
+            background-color: var(--midnight-blue);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background-color: #fff;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            font-size: 1em;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .garis {
+            display: flex;
+            align-items: center;
+            /* Vertikal align center */
+            margin-bottom: 20px;
+            /* Jarak dari elemen di bawahnya */
+        }
+
+        .garis-text {
+            position: relative;
+            font-weight: bold;
+            /* Teks lebih tebal */
+            font-size: 1.2em;
+            /* Ukuran font */
+        }
+
+        .garis::before,
+        .garis::after {
+            content: '';
+            display: block;
+            flex: 1;
+            /* Mengisi ruang yang tersisa */
+            border-top: 2px solid #333;
+            /* Warna dan ketebalan garis */
+            margin: 0 10px;
+            /* Jarak antara teks dan garis */
+        }
+
+        .garis::before {
+            margin-right: 10px;
+            /* Jarak garis di sebelah kiri */
+        }
+
+        .garis::after {
+            margin-left: 10px;
+            /* Jarak garis di sebelah kanan */
+        }
+
+        .card-link {
+            font-size: 1em;
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .card-link:hover {
+            color: #0056b3;
+        }
+
+
+        /* CSS for Two Wide Cards */
+        .wide-cards {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .wide-card {
+            flex: 1;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background-color: #fff;
+            transition: transform 0.3s;
+        }
+
+        .wide-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .wide-card .card-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .wide-card .card-content {
+            padding: 20px;
+        }
+
+        .wide-card .card-title {
+            font-size: 1.5em;
+        }
+
+        .wide-card .card-description {
+            font-size: 1em;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .wide-card .card-link {
+            font-size: 1em;
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .wide-card .card-link:hover {
+            color: #0056b3;
+        }
+
+        /* CSS Responsif untuk .containers */
+        @media (max-width: 1100px) {
+            .containers {
+                width: 90%;
+                /* Menyesuaikan lebar kontainer pada layar yang lebih kecil */
+                padding: 15px;
+                height: 35vh;
+                /* Mengurangi padding untuk ruang yang lebih kecil */
+            }
+
+            .hero-title {
+                font-size: 2em;
+                /* Mengurangi ukuran font pada layar yang lebih kecil */
+            }
+
+            .sub-hero {
+                font-size: 0.9em;
+                /* Mengurangi ukuran font untuk informasi tambahan */
+            }
+        }
+
+        @media (max-width: 968px) {
+            .containers {
+                width: 95%;
+                /* Menyesuaikan lebar kontainer untuk layar yang lebih kecil */
+                padding: 20px;
+                /* Mengurangi padding */
+            }
+
+            .hero-title {
+                font-size: 2em;
+                /* Mengurangi ukuran font pada layar yang lebih kecil */
+            }
+
+            .sub-hero {
+                font-size: 0.8em;
+                /* Mengurangi ukuran font untuk informasi tambahan */
+            }
+        }
+
+        @media (max-width: 776px) {
+            .containers {
+                width: 90%;
+                /* Mengatur lebar kontainer untuk layar kecil */
+                padding: 20px;
+                height: 35vh;
+                /* Mengurangi padding */
+            }
+
+            .hero-title {
+                text-align: justify;
+                font-size: 1.3em;
+                margin-bottom: 95px;
+                /* Ukuran font lebih kecil untuk layar kecil */
+            }
+
+            .sub-hero {
+                margin-top: -90px;
+                font-size: 0.7em;
+                /* Ukuran font lebih kecil untuk informasi tambahan */
+            }
+
+            .social-list1 {
+                bottom: 10px;
+                right: 10px;
+                /* Menyesuaikan posisi ikon sosial */
+                gap: 8px;
+                /* Menyesuaikan jarak antar ikon */
+            }
+
+            .social-link1 {
+                width: 30px;
+                height: 30px;
+                /* Mengurangi ukuran ikon sosial */
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+
+<body id="top">
+
+    <!-- Header -->
+    <header class="header" data-header>
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="assets/images/logo_sejenak-removebg-preview.png" width="150" height="150" alt="Arti home">
+            </a>
+            <nav class="navbar" data-navbar>
+                <div class="navbar-top">
+                    <a href="#" class="logo">
+                        <img src="assets/images/logo_sejenak-removebg-preview.png" width="100" height="80" alt="Arti home">
+                    </a>
+                    <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+                        <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+                    </button>
+                </div>
+                <ul class="navbar-list">
+                    <li class="navbar-item"><a href="index.html" class="navbar-link title-md">Beranda</a></li>
+                    <li class="navbar-item"><a href="artikel.html" class="navbar-link title-md">Artikel</a></li>
+                    <li class="navbar-item"><a href="info.html" class="navbar-link title-md">Info</a></li>
+                    <li class="navbar-item"><a href="aboutus.html" class="navbar-link title-md">Tentang Kami</a></li>
+                    <li class="navbar-item"><a href="aboutus.html" class="navbar-link title-md">Kontak</a></li>
+                </ul>
+            </nav>
+            <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+                <ion-icon name="menu-outline"></ion-icon>
+            </button>
+            <a href="login.html" class="btn has-before title-md">Login</a>
+            <div class="overlay" data-nav-toggler data-overlay></div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="section heroes" aria-label="home">
+        <img src="assets/images/obat3.jpeg" alt="Banner Artikel">
+        <div class="containers">
+            <div class="hero-content">
+                <span class="garis">OBAT</span>
+                <h1 class="headline-lg hero-title text-center" data-reveal="left">Obat Aripiprazole</h1>
+                <p class="sub-hero">dr. Meva Nareza T > 23 Agustus 2023 > 16rb Melihat</p>
+            </div>
+            <ul class="social-list1">
+                <li><a href="#" class="social-link1"><ion-icon name="logo-facebook"></ion-icon></a></li>
+                <li><a href="#" class="social-link1"><ion-icon name="logo-twitter"></ion-icon></a></li>
+                <li><a href="#" class="social-link1"><ion-icon name="logo-google"></ion-icon></a></li>
+                <li><a href="#" class="social-link1"><ion-icon name="logo-linkedin"></ion-icon></a></li>
+                <li><a href="#" class="social-link1"><ion-icon name="logo-pinterest"></ion-icon></a></li>
+            </ul>
+        </div>
+        <!-- New Information Section -->
+        <section class="article-info">
+            <div class="container">
+                <h2 class="info-title"> Aripiprazole </h2>
+                <p class="info-text" style="font-family: var(--ff-Oswald);">Aripiprazole adalah obat antipsikotik untuk meredakan gejala gangguan mental berat yang disebut skizofrenia. Obat ini juga bisa digunakan dalam pengobatan gangguan bipolar atau depresi berat.
+                <br><br>
+                    Aripiprazole bekerja dengan cara menyeimbangkan kadar serotonin dan dopamin, yaitu zat kimia di dalam otak yang ikut mengatur suasana hati dan perilaku. Dengan cara kerja ini, gejala psikosis, seperti halusinasi, perubahan emosi yang tiba-tiba, maupun gangguan dalam berperilaku dan cara berpikir bisa mereda.
+                <br><br>
+                    Pada penderita depresi, aripiprazole dapat meningkatkan efektivitas antidepresan. Obat ini juga dapat digunakan untuk mengontrol gejala sindrom Tourette atau gangguan perilaku yang berkaitan dengan sindrom autisme pada anak.
+                </p>
+
+                <br><br>
+                <p class="info-text" style="font-family: var(--ff-Oswald);"><strong>Peringatan Sebelum Menggunakan Aripiprazole</strong></p>
+                <p class="info-text" style="font-family: var(--ff-Oswald);">Aripiprazole hanya boleh digunakan sesuai resep dokter. Hal-hal yang harus diperhatikan sebelum menggunakan obat ini antara lain:</p>
+                <ul class="info-list" style="font-family: var(--ff-Oswald);"> 
+                    <li>1. Beri tahu dokter tentang riwayat alergi yang dimiliki pasien. Aripiprazole tidak boleh digunakan oleh orang yang alergi terhadap obat ini.</li>
+                    <li>2. Aripirazole tidak boleh digunakan untuk mengatasi gejala psikosis akibat demensia.</li>
+                    <li>3. Informasikan kepada dokter bila pasien pernah atau sedang menderita penyakit kardiovaskular, termasuk penyakit jantung, gangguan irama jantung, serangan jantung, gagal jantung, stroke, hipertensi, atau hipotensi.</li>
+                    <li>4. Beri tahu dokter jika pasien pernah menderita penyakit ginjal, penyakit liver, gangguan pada prostat, penyakit Parkinsons, glaukoma, pheochromocytoma, myasthenia gravis, sleep apnea, epilepsi atau kejang, demensia, kolesterol tinggi, sel darah putih rendah, atau fenilketonuria.</li>
+                    <li>5. Beri tahu dokter bila pasien atau anggota keluarga pasien menderita diabetes atau gangguan mental lain, seperti depresi, gangguan bipolar, maupun gangguan obsesif kompulsif.</li>
+                    <li>6. Jangan langsung mengemudi atau melakukan aktivitas lain yang memerlukan kewaspadaan setelah menggunakan aripripazole, karena obat ini bisa menyebabkan kantuk, pusing, atau penglihatan buram.</li>
+                    <li>7. Beri tahu dokter mengenai penggunaan aripiprazole sebelum menjalani operasi atau perawatan gigi.</li>
+                    <li>8. Hindari beraktivitas terlalu lama di bawah paparan sinar matahari langsung selama menjalani terapi dengan aripripazole, karena obat ini dapat mengurangi kemampuan tubuh untuk berkeringat sehingga memicu terjadinya heatstroke.</li>
+                    <li>9. Segera temui dokter jika muncul reaksi alergi obat, efek samping yang serius, atau overdosis setelah menggunakan aripripazole.</li>
+                </ul>
+                <br><br>
+
+                <p class="info-text" style="font-family: var(--ff-Oswald);"><strong>Dosis dan Aturan Pakai Aripiprazole</strong></p>
+                <p class="info-text" style="font-family: var(--ff-Oswald);">
+                    Berikut ini adalah dosis umum penggunaan aripripazole berdasarkan kondisi, bentuk obat, dan usia pasien:</p>
+                <p class="info-text" style="font-family: var(--ff-Oswald);"><strong>Aripiprazole tablet atau oral solution<strong></p>
+                <p class="info-text" style="font-family: var(--ff-Oswald);"><strong>Kondisi:</strong> Skizofrenia</p>
+                    <ul class="info-list" style="font-family: var(--ff-Oswald);"> 
+                        <li><strong> • Dewasa:</strong> Dosis awal 10-15 mg, 1 kali sehari. Dosis pemeliharaan 15 mg, 1 kali sehari. Penyesuaian dosis dilakukan dengan jarak minimal 2 minggu. Dosis maksimal tidak lebih dari 30 mg per hari.</li>
+                        <li><strong> • Remaja usia ≥ 13 tahun:</strong> Dosis awal 2 mg untuk 2 hari pertama. Dosis ditingkatkan menjadi 5-10 mg, 1 kali sehari. Dosis maksimal adalah 30 mg per hari.</li>
+                    </ul>
+                
+                <p class="info-text" style="font-family: var(--ff-Oswald);"><strong>Kondisi:</strong> Gangguan bipolar</p>
+                <ul class="info-list" style="font-family: var(--ff-Oswald);"> 
+                    <li><strong> • Dewasa:</strong> Sebagai terapi tunggal, dosis awal 15 mg, 1 kali sehari. Sebagai terapi tambahan bersama lithium atau valporate, dosis awal 10-15 mg, 1 kali sehari. Dosis dapat ditingkatkan sesuai kondisi pasien. Dosis maksimal 30 mg per hari.</li>
+                    <li><strong> • Anak usia > 10 tahun:</strong> Sebagai terapi tunggal atau terapi tambahan bersama lithium atau valporate, dosis awal 2 mg per hari, selama 2 hari pertama. Dosis ditingkatkan menjadi 5-10 mg per hari jika diperlukan. Dosis maksimal adalah 30 mg per hari.</li>
+                </ul>
+
+                <p class="info-text" style="font-family: var(--ff-Oswald);"><strong>Kondisi:</strong> Depresi berat</p>
+                <ul class="info-list" style="font-family: var(--ff-Oswald);"> 
+                    <li><strong> • Dewasa:</strong>  Dosis awal 2-5 mg, 1 kali sehari. Dosis dapat ditingkatkan secara bertahap hingga 5 mg dengan interval minimal 1 minggu setelah dosis awal. Dosis maksimal 15 mg per hari.</li>
+                </ul>
+
+                <p class="info-text" style="font-family: var(--ff-Oswald);"><strong>Kondisi:</strong> Gangguan bipolar</p>
+                <ul class="info-list" style="font-family: var(--ff-Oswald);"> 
+                    <li><strong> • Anak usia ≥ 6 tahun dengan berat badan ≤ 50 kg: </strong> 2 mg per hari, selama 2 hari pertama, lalu ditingkatkan menjadi 5 mg per hari. Jika keluhan belum membaik, dosis dapat ditingkatkan secara perlahan hingga 10 mg per hari.</li>
+                    <li><strong> • Anak usia ≥ 6 tahun dengan berat badan ≥ 50 kg:</strong> 2 mg per hari, selama 2 hari pertama, lalu 5 mg per hari selama 5 hari selanjutnya. Dosis ditingkatkan secara bertahap hingga mencapai 10 mg per hari. Dosis maksimal 20 mg per hari.</li>
+                </ul>
+
+                <p class="info-text" style="font-family: var(--ff-Oswald);"><strong>Kondisi:</strong> Gangguan mood dan perilaku akibat autisme</p>
+                <ul class="info-list" style="font-family: var(--ff-Oswald);"> 
+                    <li><strong> • Anak usia ≥ 6 tahun:</strong>  2-5 mg per hari. Dosis maksimal adalah 15 mg per hari.</li>
+                </ul>
+
+                <p class="info-text" style="font-family: var(--ff-Oswald);">Sementara itu, aripiprazole dalam bentuk suntik diberikan langsung oleh dokter atau petugas medis dalam pengawasan dokter. Aripiprazole suntik digunakan untuk menangani kondisi gaduh gelisah pada pasien skizofrenia atau gangguan bipolar episode mania.</p>
+            </div>
+        </section>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer id="kontak" class="footer" style="background-image: url('assets/images/footer-bg.png')">
+        <div class="container">
+            <div class="section footer-top">
+                <div class="footer-brand" data-reveal="bottom">
+                    <a href="#" class="logo">
+                        <img src="assets/images/logo_sejenak-removebg-preview.png" width="136" height="46" loading="lazy"
+                            alt="Doclab home">
+                    </a>
+                    <ul class="contact-list has-after">
+                        <li class="contact-item">
+                            <div class="item-icon">
+                                <ion-icon name="mail-open-outline"></ion-icon>
+                            </div>
+                            <div>
+                                <p>Main Email : <a href="mailto:contact@website.com"
+                                        class="contact-link">contact@&shy;website.com</a></p>
+                                <p>Inquiries : <a href="mailto:Info@mail.com" class="contact-link">Info@mail.com</a></p>
+                            </div>
+                        </li>
+                        <li class="contact-item">
+                            <div class="item-icon">
+                                <ion-icon name="call-outline"></ion-icon>
+                            </div>
+                            <div>
+                                <p>Office Telephone : <a href="tel:021316473969" class="contact-link">021316473969</a>
+                                </p>
+                                <p>Mobile : <a href="tel:081316473969" class="contact-link">081316473969</a></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="footer-list" data-reveal="bottom">
+                    <li>
+                        <p class="headline-sm footer-list-title">Program</p>
+                    </li>
+                    <li><a href="#" class="text footer-link">Pertanyaan yang Sering Diajukan</a></li>
+                    <li><a href="#" class="text footer-link">Testimoni</a></li>
+                    <li><a href="#" class="text footer-link">Untuk Perawatan Kesehatan</a></li>
+                    <li><a href="#" class="text footer-link">Untuk Perusahaan</a></li>
+                    <li><a href="#" class="text footer-link">Test Stress Anda</a></li>
+                </ul>
+                <ul class="footer-list" data-reveal="bottom">
+                    <li>
+                        <p class="headline-sm footer-list-title">Perusahaan</p>
+                    </li>
+                    <li><a href="#" class="text footer-link">Kesehatan Pikiran Sehat</a></li>
+                    <li><a href="#" class="text footer-link">Standar Peraturan</a></li>
+                    <li><a href="#" class="text footer-link">Tentang Kami</a></li>
+                </ul>
+                <ul class="footer-list" data-reveal="bottom">
+                    <li>
+                        <p class="headline-sm footer-list-title">Support</p>
+                    </li>
+                    <li><a href="#" class="text footer-link">Syarat dan Ketentuan</a></li>
+                    <li><a href="#" class="text footer-link">Kebijakan pribadi</a></li>
+                    <li><a href="#" class="text footer-link">Pernyataan Aksesibilitas</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p class="text copyright">
+                    &copy; Sejenak 2024 | All Rights Reserved by Sejenak
+                </p>
+                <ul class="social-list">
+                    <li><a href="#" class="social-link"><ion-icon name="logo-facebook"></ion-icon></a></li>
+                    <li><a href="#" class="social-link"><ion-icon name="logo-twitter"></ion-icon></a></li>
+                    <li><a href="#" class="social-link"><ion-icon name="logo-google"></ion-icon></a></li>
+                    <li><a href="#" class="social-link"><ion-icon name="logo-linkedin"></ion-icon></a></li>
+                    <li><a href="#" class="social-link"><ion-icon name="logo-pinterest"></ion-icon></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+        <ion-icon name="chevron-up"></ion-icon>
+    </a>
+
+    <!-- Custom JS Link -->
+    <script src="assets/js/script.js"></script>
+    <!-- Ionicon Link -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+
+</body>
+
+</html>

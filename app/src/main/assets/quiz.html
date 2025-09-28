@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tes Kesehatan Mental</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amaranth&display=swap');
+
+        body {
+            font-family: 'Amaranth', sans-serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            padding-left: 40px;
+            padding-right: 40px;
+            background-color: #34568b;
+            background-image: url('assets/images/hero-bg.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            margin-top: 2px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 6px 6px 6px rgb(83, 181, 255);
+            margin-top: 10%;
+            border-radius: 8px;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-in-out;
+            margin-top: 2px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #2757a5;
+            margin-bottom: -10px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .question {
+            display: none;
+            margin-bottom: 20px;
+            padding: 20px;
+            text-align: left;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .question p {
+            text-align: justify;
+            font-size: 18px;
+            color: #000000;
+        }
+
+        .question label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .question label:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        .question input[type="radio"] {
+            margin-right: 10px;
+            display: none;
+        }
+
+        .question input[type="radio"]+span {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #007bff;
+            border-radius: 50%;
+            position: relative;
+            margin-right: 10px;
+        }
+
+        .question input[type="radio"]:checked+span::after {
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            background-color: #007bff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #submitButton {
+            background-color: #28a745;
+        }
+
+        #submitButton:hover {
+            background-color: #218838;
+            transform: translateY(-3px);
+        }
+
+        #backButton {
+            display: none;
+            background-color: #6c757d;
+        }
+
+        #backButton:hover {
+            background-color: #5a6268;
+            transform: translateY(-3px);
+        }
+
+        .error {
+            color: red;
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0;
+            animation: showError 0.5s forwards;
+        }
+
+        @keyframes showError {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Tes Kesehatan Mental</h1>
+        <div id="questions">
+            <div class="question" id="question1">
+                <p>Dalam sebulan terakhir, seberapa sering kamu merasa cemas atau gelisah tanpa alasan yang jelas?</p>
+                <label><input type="radio" name="q1" value="20"><span></span> Tidak Pernah</label><br>
+                <label><input type="radio" name="q1" value="15"><span></span> Pernah</label><br>
+                <label><input type="radio" name="q1" value="10"><span></span> Kadang-Kadang</label><br>
+                <label><input type="radio" name="q1" value="5"><span></span> Cukup Sering</label><br>
+                <label><input type="radio" name="q1" value="0"><span></span> Sangat Sering</label><br>
+            </div>
+            <div class="question" id="question2">
+                <p>Dalam sebulan terakhir, seberapa sering kamu merasa sulit untuk tidur atau sering terbangun di malam
+                    hari?</p>
+                <label><input type="radio" name="q2" value="20"><span></span> Tidak Pernah</label><br>
+                <label><input type="radio" name="q2" value="15"><span></span> Pernah</label><br>
+                <label><input type="radio" name="q2" value="10"><span></span> Kadang-Kadang</label><br>
+                <label><input type="radio" name="q2" value="5"><span></span> Cukup Sering</label><br>
+                <label><input type="radio" name="q2" value="0"><span></span> Sangat Sering</label><br>
+            </div>
+            <div class="question" id="question3">
+                <p>Dalam sebulan terakhir, seberapa sering kamu merasa sedih atau tertekan?</p>
+                <label><input type="radio" name="q3" value="20"><span></span> Tidak Pernah</label><br>
+                <label><input type="radio" name="q3" value="15"><span></span> Pernah</label><br>
+                <label><input type="radio" name="q3" value="10"><span></span> Kadang-Kadang</label><br>
+                <label><input type="radio" name="q3" value="5"><span></span> Cukup Sering</label><br>
+                <label><input type="radio" name="q3" value="0"><span></span> Sangat Sering</label><br>
+            </div>
+            <div class="question" id="question4">
+                <p>Dalam sebulan terakhir, seberapa sering kamu merasa lelah atau tidak bersemangat meskipun sudah cukup
+                    istirahat?</p>
+                <label><input type="radio" name="q4" value="20"><span></span> Tidak Pernah</label><br>
+                <label><input type="radio" name="q4" value="15"><span></span> Pernah</label><br>
+                <label><input type="radio" name="q4" value="10"><span></span> Kadang-Kadang</label><br>
+                <label><input type="radio" name="q4" value="5"><span></span> Cukup Sering</label><br>
+                <label><input type="radio" name="q4" value="0"><span></span> Sangat Sering</label><br>
+            </div>
+            <div class="question" id="question5">
+                <p>Dalam sebulan terakhir, seberapa sering kamu merasa sulit untuk berkonsentrasi atau fokus pada tugas
+                    yang sedang dikerjakan?</p>
+                <label><input type="radio" name="q5" value="20"><span></span> Tidak Pernah</label><br>
+                <label><input type="radio" name="q5" value="15"><span></span> Pernah</label><br>
+                <label><input type="radio" name="q5" value="10"><span></span> Kadang-Kadang</label><br>
+                <label><input type="radio" name="q5" value="5"><span></span> Cukup Sering</label><br>
+                <label><input type="radio" name="q5" value="0"><span></span> Sangat Sering</label><br>
+            </div>
+            <div class="question" id="question6">
+                <p>Seberapa sering kamu merasa kehilangan minat atau energi untuk melakukan aktivitas yang biasanya kamu nikmati?</p>
+                <label><input type="radio" name="q6" value="20"><span></span> Tidak Pernah</label><br>
+                <label><input type="radio" name="q6" value="15"><span></span> Pernah</label><br>
+                <label><input type="radio" name="q6" value="10"><span></span> Kadang-Kadang</label><br>
+                <label><input type="radio" name="q6" value="5"><span></span> Cukup Sering</label><br>
+                <label><input type="radio" name="q6" value="0"><span></span> Sangat Sering</label><br>
+            </div>
+            <div class="question" id="question7">
+                <p>Seberapa sering kamu merasa cemas atau khawatir tentang masa depan?</p>
+                <label><input type="radio" name="q7" value="20"><span></span> Tidak Pernah</label><br>
+                <label><input type="radio" name="q7" value="15"><span></span> Pernah</label><br>
+                <label><input type="radio" name="q7" value="10"><span></span> Kadang-Kadang</label><br>
+                <label><input type="radio" name="q7" value="5"><span></span> Cukup Sering</label><br>
+                <label><input type="radio" name="q7" value="0"><span></span> Sangat Sering</label><br>
+            </div>
+            <div class="question" id="question8">
+                <p>Seberapa sering kamu merasa terisolasi atau tidak terhubung dengan orang lain?</p>
+                <label><input type="radio" name="q8" value="20"><span></span> Tidak Pernah</label><br>
+                <label><input type="radio" name="q8" value="15"><span></span> Pernah</label><br>
+                <label><input type="radio" name="q8" value="10"><span></span> Kadang-Kadang</label><br>
+                <label><input type="radio" name="q8" value="5"><span></span> Cukup Sering</label><br>
+                <label><input type="radio" name="q8" value="0"><span></span> Sangat Sering</label><br>
+            </div>
+            <div class="question" id="question9">
+                <p>Seberapa sering kamu merasa marah atau mudah tersinggung tanpa alasan yang jelas?</p>
+                <label><input type="radio" name="q9" value="20"><span></span> Tidak Pernah</label><br>
+                <label><input type="radio" name="q9" value="15"><span></span> Pernah</label><br>
+                <label><input type="radio" name="q9" value="10"><span></span> Kadang-Kadang</label><br>
+                <label><input type="radio" name="q9" value="5"><span></span> Cukup Sering</label><br>
+                <label><input type="radio" name="q9" value="0"><span></span> Sangat Sering</label><br>
+            </div>
+            <div class="question" id="question10">
+                <p>Seberapa sering kamu merasa kebingungan atau tidak tahu apa yang harus dilakukan dalam hidup?</p>
+                <label><input type="radio" name="q10" value="20"><span></span> Tidak Pernah</label><br>
+                <label><input type="radio" name="q10" value="15"><span></span> Pernah</label><br>
+                <label><input type="radio" name="q10" value="10"><span></span> Kadang-Kadang</label><br>
+                <label><input type="radio" name="q10" value="5"><span></span> Cukup Sering</label><br>
+                <label><input type="radio" name="q10" value="0"><span></span> Sangat Sering</label><br>
+            </div>
+        </div>
+        <div class="buttons">
+            <button id="backButton" onclick="prevQuestion()">Sebelumnya</button>
+            <button id="nextButton" onclick="nextQuestion()">Selanjutnya</button>
+            <button id="submitButton" onclick="submitQuiz()" style="display: none;">Submit</button>
+        </div>
+        <div class="error" id="errorMessage"></div>
+    </div>
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 10;
+
+        document.getElementById("question" + currentQuestion).style.display = "block";
+
+        function nextQuestion() {
+            if (validateAnswer()) {
+                if (currentQuestion < totalQuestions) {
+                    document.getElementById("question" + currentQuestion).style.display = "none";
+                    currentQuestion++;
+                    document.getElementById("question" + currentQuestion).style.display = "block";
+                    document.getElementById("errorMessage").style.opacity = 0;
+                }
+                if (currentQuestion === totalQuestions) {
+                    document.getElementById("nextButton").style.display = "none";
+                    document.getElementById("submitButton").style.display = "inline-block";
+                }
+                if (currentQuestion > 1) {
+                    document.getElementById("backButton").style.display = "inline-block";
+                }
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                document.getElementById("question" + currentQuestion).style.display = "none";
+                currentQuestion--;
+                document.getElementById("question" + currentQuestion).style.display = "block";
+                document.getElementById("errorMessage").style.opacity = 0;
+                document.getElementById("nextButton").style.display = "inline-block";
+                document.getElementById("submitButton").style.display = "none";
+            }
+            if (currentQuestion === 1) {
+                document.getElementById("backButton").style.display = "none";
+            }
+        }
+
+        function validateAnswer() {
+            const question = document.getElementById("question" + currentQuestion);
+            const options = question.querySelectorAll("input[type='radio']");
+            for (const option of options) {
+                if (option.checked) {
+                    return true;
+                }
+            }
+            document.getElementById("errorMessage").textContent = "Silakan pilih salah satu opsi jawaban.";
+            document.getElementById("errorMessage").style.opacity = 1;
+            return false;
+        }
+
+        function submitQuiz() {
+            if (validateAnswer()) {
+                let score = 0;
+                for (let i = 1; i <= totalQuestions; i++) {
+                    const question = document.getElementById("question" + i);
+                    const options = question.querySelectorAll("input[type='radio']");
+                    for (const option of options) {
+                        if (option.checked) {
+                            score += parseInt(option.value);
+                        }
+                    }
+                }
+                console.log('Total Score:', score); // Debugging line
+
+                // Simpan skor ke localStorage
+                localStorage.setItem('quizScore', score);
+
+                // Redirect ke halaman result.html
+                window.location.href = 'result.html';
+            }
+        }
+
+        function getStoredScore() {
+            const score = localStorage.getItem('quizScore');
+            console.log('Skor yang diambil dari localStorage:', score); // Debugging line
+            return score ? parseInt(score) : 0; // Mengembalikan 0 jika tidak ada skor
+        }
+
+        function updateSpeedometer(score) {
+            const rotationDegree = (score / 100) * 180 - 90; // Menghitung derajat rotasi jarum
+            needle.style.setProperty('--score', score);
+            needle.style.transform = `rotate(${rotationDegree}deg)`;
+            scoreElement.textContent = score;
+
+            // Update status berdasarkan skor
+            const status = statusRanges.find(range => score <= range.max);
+            statusElement.textContent = status.text;
+
+            // Update status class based on score
+            statusElement.className = 'status'; // Reset class
+            statusElement.classList.add(status.class);
+        }
+
+        // Ambil skor dari localStorage dan tampilkan
+        const userScore = getStoredScore();
+        updateSpeedometer(userScore);
+    </script>
+</body>
+
+</html>

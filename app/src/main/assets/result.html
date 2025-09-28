@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+        :root {
+            /* color speedometer */
+            --c1: #C1262C;
+            --c2: #DB5C23;
+            --c3: #F69220;
+            --c4: #8ba247;
+            --c5: #23b473;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        a{
+            text-decoration: none;
+        }
+
+        .sidebar-left {
+            width: 450px;
+            background-image: url('assets/images/hero-bg.png');
+            background-color: #34568b;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            animation: fadeInLeft 1s ease-in-out;
+        }
+
+        .sidebar-left img {
+            margin: 0;
+            width: 40%;
+
+        }
+
+        .sidebar-left ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-left ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-left ul li a {
+            position: relative;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1em;
+            display: block;
+            padding: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.3 ease;
+            animation: fadeInLeft 0.5s ease-in-out;
+        }
+
+
+        .sidebar-left ul li a::before {
+            content: '';
+            position: absolute;
+            background: #ffffff;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            transition: 0.3s ease;
+        }
+
+        .sidebar-left ul li a:hover:before {
+            width: 30%;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            position: relative;
+        }
+
+        .center {
+            flex: 1;
+            overflow-y: auto;
+            background: #dcf1f8;
+            position: relative;
+            padding-bottom: 20px;
+            
+        }
+
+        .center img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .center .speedometer {
+            margin-top: 90px;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .center h1 {
+            padding: 20px;
+            font-size: 1.8em;
+            margin-top: 0;
+        }
+
+        .sidebar-right {
+            background-image: url('assets/images/hero-bg.png');
+            background-color: #34568b;
+            width: 450px;
+            padding: 20px;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            animation: fadeInRight 1s ease-in-out;
+        }
+
+        .sidebar-right h2 {
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* Style untuk tombol 'Lihat Semua' di bawah daftar psikolog */
+        .sidebar-right .psychologist-card {
+            margin-bottom: 20px;
+            /* Jarak antar card psikolog */
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: fadeInUp 0.5s ease-in-out;
+            transition: 0.3s ease;
+        }
+
+        .sidebar-right .psychologist-card img {
+            width: 80px;
+            /* Atur ukuran gambar */
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .sidebar-right .psychologist-card .card-content {
+            flex: 1;
+        }
+
+        .sidebar-right .psychologist-card:hover {
+            scale: calc(1.03);
+        }
+
+        .sidebar-right .psychologist-card h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-right .psychologist-card p {
+            margin: 0;
+            color: #666;
+        }
+
+        .sidebar-right button {
+            width: 100%;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 10px;
+            /* Jarak antara card terakhir dan tombol */
+            background-color: #007bff;
+            /* Warna latar belakang tombol */
+            color: #fff;
+            /* Warna teks tombol */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .sidebar-right button:hover {
+            background-color: #0056b3;
+            /* Warna latar belakang saat hover */
+            transform: scale(1.05);
+            /* Efek zoom saat hover */
+        }
+
+        .sidebar-right button:active {
+            background-color: #004494;
+            /* Warna latar belakang saat ditekan */
+        }
+
+
+        .sub-center {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            width: auto;
+            max-width: 92%;
+            height: auto;
+            left: 4%;
+            max-height: 250px;
+            margin-top: 155px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: auto;
+            border-radius: 10px;
+            z-index: 2;
+            position: relative;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .sub-center .ulangi{
+            margin-right: 20px;
+            position: absolute;
+            bottom: 0;
+            margin-bottom: 20px;
+        }
+
+        .sub-center i {
+            padding: 10px;
+        }
+
+        .sub-center a {
+            margin-left: -110px;
+            font-size: 1em;
+            color: #0056b3;
+            text-decoration: none;
+            transition: 0.3s ease;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .sub-center a:hover {
+            scale: calc(1.1);
+            color: #007bff;
+        }
+
+        .speedometer {
+            top: -30px;
+            width: 100px;
+            height: 100px;
+            padding: 50px;
+            border-radius: 50%;
+            background:
+                radial-gradient(#ffff 0 0) content-box,
+                conic-gradient(from -90deg,
+                    var(--c1) 36deg,
+                    var(--c2) 0 72deg,
+                    var(--c3) 0 108deg,
+                    var(--c4) 0 144deg,
+                    var(--c5) 0 180deg,
+                    #0000 0);
+            position: relative;
+            margin: auto;
+        }
+
+        .needle {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            padding: 170px;
+            left: -60%;
+            top: -65%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background:
+                conic-gradient(from 175deg at 50% 85%,
+                    #ccc 2deg,
+                    #2757a5 3deg 7deg,
+                    #ccc 8deg 10deg,
+                    #0000 0) 0 -270px no-repeat,
+                radial-gradient(#2757a5 0 50%,
+                    #ccc 51%) content-box;
+            transform-origin: center;
+            transform: rotate(calc(var(--score) * 1.8deg - 90deg));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 1s ease-in-out;
+            animation: rotateNeedle 1s ease-in-out;
+        }
+
+        .score {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(calc(-1 * var(--score) * 1.8deg + 90deg));
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .status {
+            position: absolute;
+            bottom: 105%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #000;
+            text-align: center;
+            width: 100%;
+        }
+
+        .status-Depresi-Berat {
+            color: var(--c1);
+        }
+
+        .status-Depresi-Sedang {
+            color: var(--c2);
+        }
+
+        .status-Depresi-Ringan {
+            color: var(--c3);
+        }
+
+        .status-Sehat {
+            color: var(--c4);
+        }
+
+        .status-Bahagia {
+            color: var(--c5);
+        }
+
+        .content-box button {
+            width: 100%;
+            /* Make the button span the full width */
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 15px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-bottom: 50px;
+            /* Space above the button */
+            transition: background-color 0.3s;
+            display: block;
+            /* Ensure button is displayed as block */
+            text-align: center;
+            transition: 0.3s ease;
+        }
+
+        .content-box button:hover {
+            background-color: #0056b3;
+            /* Warna latar belakang saat hover */
+            transform: scale(1.05);
+        }
+
+        .center .content-box {
+            width: 100%;
+            /* Ensure the content-box is full width */
+            gap: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+            /* Ensure padding is included in width calculation */
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .center .content-box .content-item {
+            transition: 0.3s ease;
+        }
+
+        .center .content-box .content-item:hover {
+            scale: calc(1.03);
+        }
+
+        .content-box h2 {
+            color: #34568b;
+            font-weight: 800;
+        }
+
+
+        .content-box p {
+            margin-top: -15px;
+            margin-bottom: 25px;
+            font-size: 17px;
+            color: #666;
+        }
+
+        .content-box .content-item p {
+            margin-top: -20px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+        }
+
+        .content-box .content-item .sub-judul {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #acacac;
+        }
+
+        .content-item {
+            height: 100px;
+            flex: 1 1 calc(100% - 20px);
+            /* Ensure items take up half of the container width minus the gap */
+            flex-direction: row;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 32px;
+            margin-bottom: 30px;
+            text-align: justify;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box; 
+            overflow: hidden;
+            /* Hide overflow to maintain layout */
+            position: relative;
+            /* Relative positioning for internal positioning */
+        }
+
+        .content-item img {
+            width: auto;
+            /* Ensure image takes up the full width of the container */
+            height: auto;
+            max-height: 100%;
+            /* Ensure image does not overflow container */
+            border-radius: 10px;
+            object-fit: cover;
+            /* Cover the allocated space while preserving aspect ratio */
+        }
+
+        .content-item p {
+            color: #575757;
+            margin: 10px 0;
+            margin-top: -25px;
+            margin-left: 100px;
+            font-size: 0.8em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+
+            .sidebar-left,
+            .sidebar-right {
+                display: none;
+            }
+
+            .sub-center {
+                width: auto;
+                height: auto;
+                padding-right: 20px;
+                margin-right: 20px;
+                margin-top: 28%;
+            }
+
+            .content-item {
+                flex-direction: column;
+                align-items: center;
+                max-height: 100px;
+            }
+
+            .content-item img {
+                margin: 0;
+                /* Adjust margins for smaller screens */
+                max-width: 110px;
+                /* Limit maximum width on smaller screens */
+                object-fit: cover;
+            }
+
+            .sub-center a {
+                margin-top: 55%;
+            }
+
+
+            @media (max-width: 900px) {
+
+                .sidebar-left,
+                .sidebar-right {
+                    display: none;
+                }
+
+                .sub-center {
+                    width: auto;
+                    height: auto;
+                    margin-top: 28%;
+                    padding: 0;
+                }
+
+                .content-item {
+                    flex-direction: column;
+                    align-items: center;
+                    top: 0;
+                }
+
+                .content-item img {
+                    width: auto;
+                    /* Make image responsive to the content box width */
+                    height: auto;
+                    /* Maintain aspect ratio */
+                    max-width: 1000px;
+                    /* Limit maximum width to avoid excessively large images */
+                    object-fit: cover;
+                    /* Ensure image covers the space without distortion */
+                    margin-bottom: 10px;
+                    /* Add space below image */
+                }
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotateNeedle {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(calc(var(--score) * 1.8deg - 90deg));
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar-left">
+        <img src="assets/images/logo_sejenak-removebg-preview.png" alt="">
+        <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="artikel.html">Artikel</a></li>
+            <li><a href="info.html">Info</a></li>
+            <li><a href="aboutus.html">Tentang Kami</a></li>
+            <li><a href="aboutus.html">Kontak</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="center">
+            <img src="assets/images/background.jpg" alt="">
+            <div class="sub-center">
+                <figure class="speedometer">
+                    <div class="needle" id="needle">
+                        <span class="score" id="score">0</span>
+                    </div>
+                    <div class="status" id="status"></div>
+                </figure>
+                <a class="ulangi" href="quiz.html"><i class="fa-solid fa-arrows-rotate"></i>Ulangi Tes</a>
+            </div>
+            <div class="content-box">
+                <h2>Artikel Teratas</h2>
+                <p>Baca lebih lanjut artikel berikut:</p>
+                <div class="content-item">
+                    <img src="assets/images/1.png" alt="Content Image 1">
+                    <p>Tips Mengatasi Stres</p>
+                    <p class="sub-judul"><a href="detail8.html">Baca</a></p>
+                </div>
+                <div class="content-item">
+                    <img src="assets/images/2.png" alt="Content Image 2">
+                    <p>Tips dan Trik</p>
+                    <p class="sub-judul"><a href="detail2.html">Baca</a></p>
+                </div>
+                <div class="content-item">
+                    <img src="assets/images/3.png" alt="Content Image 3">
+                    <p>Gen Z Wajib Simak!</p>
+                    <p class="sub-judul"><a href="detail3.html">Baca</a></p>
+                </div>
+                <div class="content-item">
+                    <img src="assets/images/4.png" alt="Content Image 4">
+                    <p>Penyebab Kesehatan Mental?</p>
+                    <p class="sub-judul"><a href="detail7.html">Baca</a></p>
+                </div>
+                <a href="artikel.html"><button>Lihat Semua Artikel</button></a>
+            </div>
+
+        </div>
+        <div class="sidebar-right">
+            <h2>Psikolog Terpercaya</h2>
+            <div class="psychologist-card">
+                <img src="assets/images/psikolog1.jpeg" alt="Psikolog 1">
+                <div class="card-content">
+                    <h3>Dr. Anna Susanti</h3>
+                    <p>Psikolog Klinis</p>
+                    <p>"Spesialis dalam terapi kognitif-perilaku dan konseling stres."</p>
+                </div>
+            </div>
+            <div class="psychologist-card">
+                <img src="assets/images/psikolog5.jpeg" alt="Psikolog 2">
+                <div class="card-content">
+                    <h3>Dr. Budi Prasetyo</h3>
+                    <p>Psikolog Anak dan Remaja</p>
+                    <p>"Berpengalaman dalam membantu individu muda mengelola stres dan tekanan yang mereka hadapi."</p>
+                </div>
+            </div>
+            <a href="info.html"><button>Lihat Semua Psikolog</button></a>
+        </div>
+
+    </div>
+
+    <script>
+        function getStoredScore() {
+            return localStorage.getItem('quizScore'); // Pastikan key ini sama dengan yang digunakan di file kuis
+        }
+
+        function updateSpeedometer(score) {
+            const rotationDegree = (score / 100) * 180 - 90; // Menghitung derajat rotasi jarum
+            needle.style.setProperty('--score', score);
+            needle.style.transform = `rotate(${rotationDegree}deg)`;
+            scoreElement.textContent = score;
+
+            // Update status berdasarkan skor
+            const status = statusRanges.find(range => score <= range.max);
+            statusElement.textContent = status.text;
+
+            // Update status class based on score
+            statusElement.className = 'status'; // Reset class
+            statusElement.classList.add(status.class);
+        }
+
+        // Define status ranges with corresponding classes
+        const statusRanges = [
+            { max: 20, text: 'Depresi Berat', class: 'status-Depresi-Berat' },
+            { max: 40, text: 'Depresi Sedang', class: 'status-Depresi-Sedang' },
+            { max: 60, text: 'Depresi Ringan', class: 'status-Depresi-Ringan' },
+            { max: 80, text: 'Sehat', class: 'status-Sehat' },
+            { max: 100, text: 'Bahagia', class: 'status-Bahagia' }
+        ];
+
+        const needle = document.getElementById('needle');
+        const scoreElement = document.getElementById('score');
+        const statusElement = document.getElementById('status');
+
+        // Ambil skor dari localStorage dan tampilkan
+        const userScore = getStoredScore();
+        if (userScore) {
+            updateSpeedometer(userScore);
+        } else {
+            statusElement.textContent = 'No score available.';
+        }
+
+        // Jangan menghapus skor dari localStorage agar tetap tersedia setelah refresh
+    </script>
+</body>
+
+</html>
