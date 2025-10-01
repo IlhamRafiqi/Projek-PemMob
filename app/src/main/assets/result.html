@@ -594,7 +594,9 @@
                     </div>
                     <div class="status" id="status"></div>
                 </figure>
-                <a class="ulangi" href="quiz.html"><i class="fa-solid fa-arrows-rotate"></i>Ulangi Tes</a>
+                <a class="ulangi" href="#" onclick="restartQuiz()">
+                    <i class="fa-solid fa-arrows-rotate"></i>Ulangi Tes
+                </a>
             </div>
             <div class="content-box">
                 <h2>Artikel Teratas</h2>
@@ -643,38 +645,41 @@
             </div>
             <a href="info.html"><button>Lihat Semua Psikolog</button></a>
         </div>
-
     </div>
-
     <script>
-        function Speedometer(score) {
-            const rotationDegree = (score / 100) * 180 - 90; // rotasi jarum
-            needle.style.transform = `rotate(${rotationDegree}deg)`;
-            scoreElement.textContent = "Skor kamu: " + score;
+        function updateSpeedometer(score) {
+            const needle = document.getElementById('needle');
+            const scoreElement = document.getElementById('score');
+            const statusElement = document.getElementById('status');
 
-            // status berdasarkan skor
+            const rotationDegree = (score / 100) * 180 - 90;
+            if (needle) needle.style.transform = `rotate(${rotationDegree}deg)`;
+            if (scoreElement) scoreElement.textContent = "Score: " + score;
+
+            const statusRanges = [
+                { max: 20, text: 'Depresi Berat', class: 'status-Depresi-Berat' },
+                { max: 40, text: 'Depresi Sedang', class: 'status-Depresi-Sedang' },
+                { max: 60, text: 'Depresi Ringan', class: 'status-Depresi-Ringan' },
+                { max: 80, text: 'Sehat', class: 'status-Sehat' },
+                { max: 100, text: 'Bahagia', class: 'status-Bahagia' }
+            ];
+
             const status = statusRanges.find(range => score <= range.max);
-            statusElement.textContent = status.text;
-
-            // update class
-            statusElement.className = 'status';
-            statusElement.classList.add(status.class);
+            if (statusElement && status) {
+                statusElement.textContent = status.text;
+                statusElement.className = 'status ' + status.class;
+            }
         }
 
-        // status ranges
-        const statusRanges = [
-            { max: 20, text: 'Depresi Berat', class: 'status-Depresi-Berat' },
-            { max: 40, text: 'Depresi Sedang', class: 'status-Depresi-Sedang' },
-            { max: 60, text: 'Depresi Ringan', class: 'status-Depresi-Ringan' },
-            { max: 80, text: 'Sehat', class: 'status-Sehat' },
-            { max: 100, text: 'Bahagia', class: 'status-Bahagia' }
-        ];
-
-        const needle = document.getElementById('needle');
-        const scoreElement = document.getElementById('score');
-        const statusElement = document.getElementById('status');
-
+        function restartQuiz() {
+            if (window.Android && Android.restartQuiz) {
+                Android.restartQuiz();
+            } else {
+                window.location.href = "quiz.html";
+            }
+        }
     </script>
+
 </body>
 
 </html>

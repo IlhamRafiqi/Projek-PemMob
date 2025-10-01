@@ -128,50 +128,21 @@ const statusRanges = [
     { max: 100, text: 'Depresi Berat', class: 'status-Depresi-Berat' }
 ];
 
-function getRandomScore() {
-    return Math.floor(Math.random() * 101); // Skor acak antara 0 dan 100
-}
 
 function updateSpeedometer(score) {
-    const rotationDegree = (score / 100) * 180 - 90; // Menghitung derajat rotasi jarum
-    needle.style.setProperty('--score', score);
-    needle.style.transform = `rotate(${rotationDegree}deg)`;
-    scoreElement.textContent = score;
+  const rotationDegree = (score / 100) * 180 - 90;
+  needle.style.transform = `rotate(${rotationDegree}deg)`;
+  scoreElement.textContent = score;
 
-    // Update status berdasarkan skor
-    const status = statusRanges.find(range => score <= range.max);
-    statusElement.textContent = `${status.text}`;
+  // status berdasarkan skor
+  const status = statusRanges.find(range => score <= range.max);
+  statusElement.textContent = status.text;
 
-    // Update status class based on score
-    statusElement.className = 'status'; // Reset class
-    statusElement.classList.add(status.class);
+  // reset + tambahkan class warna
+  statusElement.className = 'status';
+  statusElement.classList.add(status.class);
 }
 
-function update() {
-    const score = getRandomScore();
-    updateSpeedometer(score);
-}
-
-// Perbarui speedometer setiap 2 detik
-setInterval(update, 2000);
-
-// Inisialisasi speedometer saat halaman dimuat
-update();
-
-function updateSpeedometer(score) {
-    const rotationDegree = (score / 100) * 180 - 90; // Menghitung derajat rotasi jarum
-    needle.style.setProperty('--score', score);
-    needle.style.transform = `rotate(${rotationDegree}deg)`;
-    scoreElement.textContent = score;
-
-    // Update status berdasarkan skor
-    const status = statusRanges.find(range => score <= range.max);
-    statusElement.textContent = `${status.text}`;
-
-    // Update status class based on score
-    statusElement.className = 'status'; // Reset class
-    statusElement.classList.add(status.class);
-}
 
 const activePage = window.location.pathname;
 const navLinks = document.querySelectorAll('.narbar-item .navbar-link').forEach(link => {
