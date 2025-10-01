@@ -647,26 +647,21 @@
     </div>
 
     <script>
-        function getStoredScore() {
-            return localStorage.getItem('quizScore'); // Pastikan key ini sama dengan yang digunakan di file kuis
-        }
-
-        function updateSpeedometer(score) {
-            const rotationDegree = (score / 100) * 180 - 90; // Menghitung derajat rotasi jarum
-            needle.style.setProperty('--score', score);
+        function Speedometer(score) {
+            const rotationDegree = (score / 100) * 180 - 90; // rotasi jarum
             needle.style.transform = `rotate(${rotationDegree}deg)`;
-            scoreElement.textContent = score;
+            scoreElement.textContent = "Skor kamu: " + score;
 
-            // Update status berdasarkan skor
+            // status berdasarkan skor
             const status = statusRanges.find(range => score <= range.max);
             statusElement.textContent = status.text;
 
-            // Update status class based on score
-            statusElement.className = 'status'; // Reset class
+            // update class
+            statusElement.className = 'status';
             statusElement.classList.add(status.class);
         }
 
-        // Define status ranges with corresponding classes
+        // status ranges
         const statusRanges = [
             { max: 20, text: 'Depresi Berat', class: 'status-Depresi-Berat' },
             { max: 40, text: 'Depresi Sedang', class: 'status-Depresi-Sedang' },
@@ -679,15 +674,6 @@
         const scoreElement = document.getElementById('score');
         const statusElement = document.getElementById('status');
 
-        // Ambil skor dari localStorage dan tampilkan
-        const userScore = getStoredScore();
-        if (userScore) {
-            updateSpeedometer(userScore);
-        } else {
-            statusElement.textContent = 'No score available.';
-        }
-
-        // Jangan menghapus skor dari localStorage agar tetap tersedia setelah refresh
     </script>
 </body>
 

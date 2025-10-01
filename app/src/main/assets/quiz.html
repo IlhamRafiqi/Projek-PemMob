@@ -332,50 +332,20 @@
 
         function submitQuiz() {
             if (validateAnswer()) {
-                let score = 0;
+                // kirim semua jawaban ke Kotlin
                 for (let i = 1; i <= totalQuestions; i++) {
                     const question = document.getElementById("question" + i);
                     const options = question.querySelectorAll("input[type='radio']");
                     for (const option of options) {
                         if (option.checked) {
-                            score += parseInt(option.value);
+                            Android.saveAnswer(i, parseInt(option.value));
                         }
                     }
                 }
-                console.log('Total Score:', score); // Debugging line
-
-                // Simpan skor ke localStorage
-                localStorage.setItem('quizScore', score);
-
-                // Redirect ke halaman result.html
-                window.location.href = 'result.html';
+                // panggil Kotlin untuk hitung skor & pindah ke ResultActivity
+                Android.submitQuiz();
             }
         }
-
-        function getStoredScore() {
-            const score = localStorage.getItem('quizScore');
-            console.log('Skor yang diambil dari localStorage:', score); // Debugging line
-            return score ? parseInt(score) : 0; // Mengembalikan 0 jika tidak ada skor
-        }
-
-        function updateSpeedometer(score) {
-            const rotationDegree = (score / 100) * 180 - 90; // Menghitung derajat rotasi jarum
-            needle.style.setProperty('--score', score);
-            needle.style.transform = `rotate(${rotationDegree}deg)`;
-            scoreElement.textContent = score;
-
-            // Update status berdasarkan skor
-            const status = statusRanges.find(range => score <= range.max);
-            statusElement.textContent = status.text;
-
-            // Update status class based on score
-            statusElement.className = 'status'; // Reset class
-            statusElement.classList.add(status.class);
-        }
-
-        // Ambil skor dari localStorage dan tampilkan
-        const userScore = getStoredScore();
-        updateSpeedometer(userScore);
     </script>
 </body>
 
