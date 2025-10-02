@@ -89,9 +89,9 @@ fun HeroSection() {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                    painter = painterResource(id = R.drawable.logoputih),
                     contentDescription = "Logo",
-                    modifier = Modifier.size(64.dp)
+                    modifier = Modifier.size(120.dp)
                 )
                 Spacer(Modifier.height(6.dp))
                 Text(
@@ -102,12 +102,7 @@ fun HeroSection() {
                     lineHeight = 30.sp
                 )
             }
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = "Banner",
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.size(120.dp)
-            )
+
         }
     }
 }
