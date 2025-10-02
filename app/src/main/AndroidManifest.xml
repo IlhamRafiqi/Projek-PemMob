@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Izinkan akses internet untuk WebView -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -14,9 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SejenakApps">
 
-        <!-- MainActivity tetap jadi halaman utama -->
         <activity
             android:name=".MainActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".SejenakActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,12 +26,12 @@
             </intent-filter>
         </activity>
 
-        <!-- Tambahkan QuizActivity -->
+        <!-- QuizActivity -->
         <activity
             android:name=".QuizActivity"
             android:exported="false" />
 
-        <!-- Tambahkan ResultActivity -->
+        <!-- ResultActivity -->
         <activity
             android:name=".ResultActivity"
             android:exported="false" />
