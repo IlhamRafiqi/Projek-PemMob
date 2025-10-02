@@ -2,7 +2,6 @@ package com.example.sejenakapps
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -18,12 +17,13 @@ class QuizActivity : AppCompatActivity() {
         setContentView(R.layout.activity_quiz)
 
         webView = findViewById(R.id.webview)
-        webView.webViewClient = WebViewClient()
         webView.settings.javaScriptEnabled = true
-        webView.addJavascriptInterface(WebAppInterface(), "Android")
+        webView.webViewClient = WebViewClient()
 
-        // load quiz.html dari assets
+        webView.addJavascriptInterface(WebAppInterface(), "Android")
         webView.loadUrl("file:///android_asset/quiz.html")
+
+        answers.clear()
     }
 
     inner class WebAppInterface {
@@ -35,8 +35,6 @@ class QuizActivity : AppCompatActivity() {
         @JavascriptInterface
         fun submitQuiz() {
             val totalScore = answers.values.sum()
-            Log.d("QUIZ", "Total Score = $totalScore")
-
             val intent = Intent(this@QuizActivity, ResultActivity::class.java)
             intent.putExtra("score", totalScore)
             startActivity(intent)
