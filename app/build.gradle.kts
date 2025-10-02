@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.sejenakapps"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.sejenakapps"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
     }
@@ -49,6 +49,7 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:34.3.0"))
     implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-auth-ktx:23.2.1")
 
     implementation(libs.material)
     implementation(libs.androidx.credentials)
