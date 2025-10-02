@@ -1,5 +1,6 @@
 package com.example.sejenakapps
 
+import android.content.Intent
 import android.os.Bundle
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
@@ -13,21 +14,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val webView = WebView(this)
-        webView.webViewClient = WebViewClient()
+        webView = WebView(this)  // ✅ gunakan properti class
         webView.settings.javaScriptEnabled = true
-        webView.loadUrl("file:///android_asset/quiz.html")
-
-        setContentView(webView)
-
-        webView = findViewById(R.id.webview)
-        webView.settings.javaScriptEnabled = true
-
         webView.addJavascriptInterface(WebAppInterface(), "Android")
 
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
-                // Event listener tombol start quiz
+                // inject JS listener untuk tombol di html
                 webView.evaluateJavascript(
                     """
                     document.getElementById("btnStartQuiz")?.addEventListener("click", function() {
@@ -39,8 +32,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // load halaman awal (pilih salah satu: index.html / quiz.html)
         webView.loadUrl("file:///android_asset/index.html")
 
+        setContentView(webView)
     }
 
     inner class WebAppInterface {

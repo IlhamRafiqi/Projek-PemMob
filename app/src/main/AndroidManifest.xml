@@ -14,16 +14,26 @@
         android:theme="@style/Theme.SejenakApps">
 
         <activity
-            android:name=".LegacyMainActivity"
-            android:exported="true" />
-
-        <activity
-            android:name=".view.SejenakActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <!-- RegisterActivity -->
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".LegacyMainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.SejenakActivity"
+            android:exported="false">
         </activity>
 
         <!-- QuizActivity -->
