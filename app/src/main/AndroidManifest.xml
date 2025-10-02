@@ -14,11 +14,11 @@
         android:theme="@style/Theme.SejenakApps">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".LegacyMainActivity"
             android:exported="true" />
 
         <activity
-            android:name=".SejenakActivity"
+            android:name=".view.SejenakActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
