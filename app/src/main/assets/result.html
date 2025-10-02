@@ -101,7 +101,7 @@
             background: #dcf1f8;
             position: relative;
             padding-bottom: 20px;
-            
+
         }
 
         .center img {
@@ -284,7 +284,6 @@
             padding: 170px;
             left: -60%;
             top: -65%;
-            transform: translate(-50%, -50%);
             border-radius: 50%;
             background:
                 conic-gradient(from 175deg at 50% 85%,
@@ -295,35 +294,44 @@
                 radial-gradient(#2757a5 0 50%,
                     #ccc 51%) content-box;
             transform-origin: center;
-            transform: rotate(calc(var(--score) * 1.8deg - 90deg));
             display: flex;
             justify-content: center;
             align-items: center;
             transition: transform 1s ease-in-out;
-            animation: rotateNeedle 1s ease-in-out;
+        }
+
+
+        .status {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            width: 100%;
         }
 
         .score {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) rotate(calc(-1 * var(--score) * 1.8deg + 90deg));
-            font-size: 24px;
-            font-weight: 800;
-            color: #fff;
+            transform: translate(-50%, -50%);
+            color: #fff;     /* biru biar kontras */
+            font-size: 1.8em;
+            font-weight: bold;
+            z-index: 3;         /* pastikan di atas jarum */
         }
 
-        .status {
-            position: absolute;
-            bottom: 105%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #000;
-            text-align: center;
-            width: 100%;
+
+        .needle .score {
+            color: #fff;        /* warna putih */
+            font-size: 1.2em;   /* biar agak besar */
+            font-weight: bold;  /* lebih tegas */
+            z-index: 2;         /* biar tidak ketutup background */
         }
+
 
         .status-Depresi-Berat {
             color: var(--c1);
@@ -429,7 +437,7 @@
             border: 1px solid #ddd;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            box-sizing: border-box; 
+            box-sizing: border-box;
             overflow: hidden;
             /* Hide overflow to maintain layout */
             position: relative;
@@ -589,10 +597,9 @@
             <img src="assets/images/background.jpg" alt="">
             <div class="sub-center">
                 <figure class="speedometer">
-                    <div class="needle" id="needle">
-                        <span class="score" id="score">0</span>
-                    </div>
+                    <div class="needle" id="needle"></div>
                     <div class="status" id="status"></div>
+                    <span class="score" id="score">0</span> <!-- pindah ke sini -->
                 </figure>
                 <a class="ulangi" href="#" onclick="restartQuiz()">
                     <i class="fa-solid fa-arrows-rotate"></i>Ulangi Tes
@@ -654,7 +661,7 @@
 
             const rotationDegree = (score / 100) * 180 - 90;
             if (needle) needle.style.transform = `rotate(${rotationDegree}deg)`;
-            if (scoreElement) scoreElement.textContent = "Score: " + score;
+            if (scoreElement) scoreElement.textContent = score;
 
             const statusRanges = [
                 { max: 20, text: 'Depresi Berat', class: 'status-Depresi-Berat' },
