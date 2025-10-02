@@ -13,14 +13,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-<<<<<<< HEAD
         val webView = WebView(this)
         webView.webViewClient = WebViewClient()
         webView.settings.javaScriptEnabled = true
         webView.loadUrl("file:///android_asset/quiz.html")
 
         setContentView(webView)
-=======
+
         webView = findViewById(R.id.webview)
         webView.settings.javaScriptEnabled = true
 
@@ -41,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         webView.loadUrl("file:///android_asset/index.html")
->>>>>>> fd2c66ec98284e7c0cb53013cea3e461442058fb
+
     }
 
     inner class WebAppInterface {
