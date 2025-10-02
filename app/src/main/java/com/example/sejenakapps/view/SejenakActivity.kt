@@ -1,11 +1,11 @@
-package com.example.sejenakapps
+package com.example.sejenakapps.view
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,10 +20,9 @@ import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -33,21 +32,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
-import kotlinx.coroutines.delay
+import com.example.sejenakapps.QuizActivity
+import com.example.sejenakapps.R
+import com.example.sejenakapps.viewmodel.SejenakViewModel
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.Image
+
 
 class SejenakActivity : ComponentActivity() {
+
+    private val viewModel: SejenakViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SejenakApp()
+            SejenakApp(viewModel)
         }
     }
 }
 
-@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
-fun SejenakApp() {
+fun SejenakApp(viewModel: SejenakViewModel) {
     Scaffold { padding ->
         Column(
             modifier = Modifier
@@ -60,9 +65,9 @@ fun SejenakApp() {
             Spacer(Modifier.height(8.dp))
             BenefitList()
             Spacer(Modifier.height(24.dp))
-            QuotesSection()
+            QuotesSection(viewModel)
             Spacer(Modifier.height(12.dp))
-            ArticlesSection()
+            ArticlesSection(viewModel)
             Spacer(Modifier.height(24.dp))
             FooterSection()
         }
@@ -152,23 +157,10 @@ fun BenefitItem(text: String) {
     }
 }
 
-private val quotes = listOf(
-    "Hidup adalah apa yang terjadi saat kita sibuk merencanakan hal lain.",
-    "Keberhasilan bukan kunci kebahagiaan. Kebahagiaan adalah kunci keberhasilan.",
-    "Jangan menunggu waktu yang tepat, karena waktu tidak pernah datang.",
-    "Kebahagiaan tidak tergantung pada apa yang kita miliki, tetapi pada cara kita memandang hidup.",
-    "Percayalah pada dirimu sendiri dan semua yang bisa kamu capai."
-)
-
 @Composable
-fun QuotesSection() {
-    var idx by remember { mutableStateOf(0) }
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(5000)
-            idx = (idx + 1) % quotes.size
-        }
-    }
+fun QuotesSection(viewModel: SejenakViewModel) {
+    val quote = viewModel.getCurrentQuote()
+
     Column(
         Modifier.fillMaxWidth().padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -176,22 +168,15 @@ fun QuotesSection() {
         Text("Quotes Of The Day", color = BluePrimary, fontSize = 22.sp, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(8.dp))
         Surface(shape = RoundedCornerShape(16.dp), tonalElevation = 2.dp, modifier = Modifier.fillMaxWidth()) {
-            Text(quotes[idx], textAlign = TextAlign.Center, fontSize = 16.sp, modifier = Modifier.padding(16.dp))
+            Text(quote.text, textAlign = TextAlign.Center, fontSize = 16.sp, modifier = Modifier.padding(16.dp))
         }
     }
 }
 
-data class Article(val title: String, val date: String, val link: String)
-
-private val articles = listOf(
-    Article("9 Cara Sederhana Menjaga Kesehatan Mental", "28 Juni, 2024", "https://www.halodoc.com"),
-    Article("Mengidap Banyak Gangguan Mental...", "16 Juli, 2024", "https://www.halodoc.com"),
-    Article("10 Cara Efektif Mengatasi Masalah Mental", "24 Juli, 2024", "https://www.prudential.co.id")
-)
-
 @OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
-fun ArticlesSection() {
+fun ArticlesSection(viewModel: SejenakViewModel) {
+    val articles = viewModel.articles.value
     val pagerState = rememberPagerState(pageCount = { articles.size })
     val context = LocalContext.current
 
@@ -205,7 +190,7 @@ fun ArticlesSection() {
                 shadowElevation = 4.dp,
                 modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth().clickable {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.link))
-                    ContextCompat.startActivity(context, intent, null)
+                    context.startActivity(intent)
                 }
             ) {
                 Box(Modifier.fillMaxSize().background(Color(0xFF4F5B70))) {
