@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "797077536573",
-    "project_id": "projek-pemmob-bc5a2",
-    "storage_bucket": "projek-pemmob-bc5a2.firebasestorage.app"
+    "project_number": "1055753337055",
+    "project_id": "sejenak-5e1b5",
+    "storage_bucket": "sejenak-5e1b5.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:797077536573:android:779acff0cfec32a6b20f54",
+        "mobilesdk_app_id": "1:1055753337055:android:76438850ded1b0c0cc916a",
         "android_client_info": {
           "package_name": "com.example.sejenakapps"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBTua50-O1QJOD-n-TUcnsILhepXcu1gnI"
+          "current_key": "AIzaSyDQEhncgWL7T-tSBshBSt6HR37BZpNDF94"
         }
       ],
       "services": {
