@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sefenak</string>
+    <string name="app_name">Sejenak</string>
     <string name="get_started_now">Get Started now</string>
     <string name="create_account_description">Create an account or log in to explore about our app</string>
     <string name="log_in">Log In</string>
@@ -10,7 +10,7 @@
     <string name="remember_me">Remember me</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="continue_with_google">Continue with Google</string>
-    <string name="continue_with_facebook">Continue with Facebook</string>
     <string name="dont_have_account">Don\'t have an account?</string>
     <string name="sign_up_here">Sign up here</string>
+    <string name="back">Kembali</string>
 </resources>

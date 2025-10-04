@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SejenakApps">
 
+        <!-- Login sebagai halaman pertama -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -22,29 +23,19 @@
             </intent-filter>
         </activity>
 
-        <!-- RegisterActivity -->
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="false" />
+        <!-- Register -->
+        <activity android:name=".RegisterActivity" android:exported="false" />
 
-        <activity
-            android:name=".LegacyMainActivity"
-            android:exported="false" />
+        <!-- Tambahkan MainActivity -->
+        <activity android:name=".MainActivity" android:exported="false" />
 
-        <activity
-            android:name=".view.SejenakActivity"
-            android:exported="false">
-        </activity>
+        <!-- Legacy & Sejenak -->
+        <activity android:name=".LegacyMainActivity" android:exported="false" />
+        <activity android:name=".view.SejenakActivity" android:exported="false" />
 
-        <!-- QuizActivity -->
-        <activity
-            android:name=".QuizActivity"
-            android:exported="false" />
-
-        <!-- ResultActivity -->
-        <activity
-            android:name=".ResultActivity"
-            android:exported="false" />
+        <!-- Quiz & Result -->
+        <activity android:name=".QuizActivity" android:exported="false" />
+        <activity android:name=".ResultActivity" android:exported="false" />
 
     </application>
 </manifest>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -13,13 +14,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
-    private lateinit var registerButton: Button
-
+    private lateinit var registerLink: TextView
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onStart() {
         super.onStart()
-        // Jika user sudah login → langsung ke MainActivity
+        firebaseAuth = FirebaseAuth.getInstance()
         if (firebaseAuth.currentUser != null) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
@@ -33,12 +33,12 @@ class LoginActivity : AppCompatActivity() {
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
         loginButton = findViewById(R.id.loginButton)
-        registerButton = findViewById(R.id.registerButton)
+        registerLink = findViewById(R.id.tvRegisterLink)
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-        // Tombol ke Register
-        registerButton.setOnClickListener {
+        // Link ke halaman Register
+        registerLink.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
             finish()
         }

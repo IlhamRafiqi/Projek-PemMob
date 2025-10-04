@@ -67,36 +67,7 @@
                     android:orientation="vertical"
                     android:padding="24dp">
 
-                    <!-- Toggle Login / Signup -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:background="#F3F4F6"
-                        android:layout_marginBottom="24dp">
 
-                        <TextView
-                            android:id="@+id/tvLoginTab"
-                            android:layout_width="0dp"
-                            android:layout_height="48dp"
-                            android:layout_weight="1"
-                            android:text="Log In"
-                            android:textColor="#4B5563"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:gravity="center" />
-
-                        <TextView
-                            android:id="@+id/registerButton"
-                            android:layout_width="0dp"
-                            android:layout_height="48dp"
-                            android:layout_weight="1"
-                            android:text="Sign up"
-                            android:textColor="#2757A5"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:gravity="center"/>
-                    </LinearLayout>
 
                     <!-- Email -->
                     <com.google.android.material.textfield.TextInputLayout
@@ -140,42 +111,6 @@
                             android:inputType="textPassword" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Remember & Forgot -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="24dp">
-
-                        <CheckBox
-                            android:id="@+id/cbRememberMe"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#2757A5" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="Remember me"
-                            android:textColor="#374151"
-                            android:textSize="14sp" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/tvForgotPassword"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Forgot Password ?"
-                            android:textColor="#2757A5"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
 
                     <!-- Login Button -->
                     <com.google.android.material.button.MaterialButton
@@ -190,6 +125,31 @@
                         app:cornerRadius="12dp"
                         app:elevation="2dp"
                         android:layout_marginBottom="24dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sudah punya akun?"
+                            android:textColor="#6B7280"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvRegisterLink"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                                android:text="Daftar di sini"
+                            android:textColor="#2757A5"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
 
                     <!-- Google Button -->
                     <com.google.android.material.button.MaterialButton
