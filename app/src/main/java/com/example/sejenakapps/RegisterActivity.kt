@@ -6,9 +6,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 
 class RegisterActivity : AppCompatActivity() {
@@ -17,11 +22,15 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var confirmPasswordEditText: EditText
-
     private lateinit var registerButton: Button
-
     private lateinit var loginLink: TextView
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var btnGoogle: Button
+
+    companion object {
+        private const val RC_SIGN_IN = 1002
+    }
 
     override fun onStart() {
         super.onStart()
@@ -42,16 +51,19 @@ class RegisterActivity : AppCompatActivity() {
         confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText)
         registerButton = findViewById(R.id.registerButton)
         loginLink = findViewById(R.id.tvLoginLink)
+        btnGoogle = findViewById(R.id.btnGoogle)
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-        // Tombol Back (opsional)
-        val backButton: ImageButton = findViewById(R.id.btnBack)
-        backButton.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
+        // Konfigurasi Google Sign In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        // Tombol ke Login
+
+        // Link ke halaman Login
         loginLink.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
@@ -61,6 +73,12 @@ class RegisterActivity : AppCompatActivity() {
         registerButton.setOnClickListener {
             processRegister()
         }
+
+        // Tombol Google Sign Up
+        btnGoogle.setOnClickListener {
+            val signInIntent = googleSignInClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+        }
     }
 
     private fun processRegister() {
@@ -69,7 +87,7 @@ class RegisterActivity : AppCompatActivity() {
         val password = passwordEditText.text.toString().trim()
         val confirmPassword = confirmPasswordEditText.text.toString().trim()
 
-        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+        if (fullName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "Semua field harus diisi!", Toast.LENGTH_SHORT).show()
             return
         }
@@ -95,15 +113,39 @@ class RegisterActivity : AppCompatActivity() {
                         }
                     }
                 } else {
-                    Toast.makeText(
-                        this,
-                        "Registrasi gagal: ${task.exception?.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this, "Registrasi gagal: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    // Handle Google Sign In
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account: GoogleSignInAccount = task.getResult(ApiException::class.java)!!
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException) {
+                e.printStackTrace()
+                Toast.makeText(applicationContext, e.localizedMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        firebaseAuth.signInWithCredential(credential)
+            .addOnSuccessListener {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
+            .addOnFailureListener { error ->
+                Toast.makeText(this, "Error: ${error.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
     }
 }
