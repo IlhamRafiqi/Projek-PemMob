@@ -136,7 +136,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sudah punya akun?"
+                            android:text="Already have an account?"
                             android:textColor="#6B7280"
                             android:textSize="14sp" />
 
@@ -145,7 +145,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                                android:text="Daftar di sini"
+                            android:text="Sign up here!"
                             android:textColor="#2757A5"
                             android:textSize="14sp"
                             android:textStyle="bold" />

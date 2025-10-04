@@ -7,12 +7,9 @@
     <string name="welcome_back">Welcome back! Please enter your details</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="remember_me">Remember me</string>
-    <string name="forgot_password">Forgot Password?</string>
     <string name="continue_with_google">Continue with Google</string>
     <string name="dont_have_account">Don\'t have an account?</string>
     <string name="sign_up_here">Sign up here</string>
-    <string name="back">Kembali</string>
     <string name="default_web_client_id">1055753337055-b7o1t64ib20mrv539kumkbj7g6mvglh7.apps.googleusercontent.com</string>
 
 </resources>
