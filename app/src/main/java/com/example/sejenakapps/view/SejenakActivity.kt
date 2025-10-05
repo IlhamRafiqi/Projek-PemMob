@@ -60,6 +60,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.SideEffect
+import com.example.sejenak.view.ArticleScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class SejenakActivity : ComponentActivity() {
@@ -103,7 +104,8 @@ class SejenakActivity : ComponentActivity() {
                     .background(Color.Transparent)
                     .windowInsetsPadding(WindowInsets.navigationBars)
             ) {
-                SejenakApp(viewModel)
+                ArticleScreen()
+            //SejenakApp(viewModel)
             }
         }
     }
