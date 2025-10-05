@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.sejenakapps.view.SejenakActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -33,7 +34,8 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         firebaseAuth = FirebaseAuth.getInstance()
         if (firebaseAuth.currentUser != null) {
-            startActivity(Intent(this, MainActivity::class.java))
+            // 🔹 Langsung menuju ke SejenakActivity jika user sudah login
+            startActivity(Intent(this, SejenakActivity::class.java))
             finish()
         }
     }
@@ -56,18 +58,18 @@ class LoginActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-        // Link ke halaman Register
+        // 🔹 Link ke halaman Register
         registerLink.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
             finish()
         }
 
-        // Tombol Login
+        // 🔹 Tombol Login manual (email & password)
         loginButton.setOnClickListener {
             processLogin()
         }
 
-        // Tombol Google Sign In
+        // 🔹 Tombol Login Google
         btnGoogle.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
@@ -87,7 +89,8 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Login berhasil!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, MainActivity::class.java))
+                    // 🔹 Arahkan ke SejenakActivity setelah login sukses
+                    startActivity(Intent(this, SejenakActivity::class.java))
                     finish()
                 } else {
                     Toast.makeText(
@@ -121,7 +124,8 @@ class LoginActivity : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(credential)
             .addOnSuccessListener {
-                startActivity(Intent(this, MainActivity::class.java))
+                // 🔹 Setelah login Google sukses, arahkan ke SejenakActivity
+                startActivity(Intent(this, SejenakActivity::class.java))
                 finish()
             }
             .addOnFailureListener { error ->
