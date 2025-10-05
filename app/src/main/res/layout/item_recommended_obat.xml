@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="230dp"
+    android:layout_margin="8dp"
+    android:background="@drawable/bg_card"
+    android:padding="8dp"
+    android:clipToOutline="true">
+
+    <!-- Gambar Obat mengambil sebagian besar -->
+    <ImageView
+        android:id="@+id/imgFoto"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:scaleType="centerCrop"
+        android:contentDescription="Gambar Obat"
+        android:clipToOutline="true" />
+
+    <!-- Nama Obat -->
+    <TextView
+        android:id="@+id/tvNama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Paracetamol"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:textColor="#000000" />
+
+    <!-- Deskripsi Obat -->
+    <TextView
+        android:id="@+id/tvDeskripsi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Menurunkan demam dan nyeri ringan"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        android:textColor="#555555" />
+
+    <!-- Tombol Read More di kanan bawah -->
+    <TextView
+        android:id="@+id/tvReadMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Read More"
+        android:textColor="#2757A5"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="end"
+        android:clickable="true"
+        android:focusable="true" />
+
+</LinearLayout>

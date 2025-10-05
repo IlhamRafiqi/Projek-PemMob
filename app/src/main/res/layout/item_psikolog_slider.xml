@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="8dp"
+    android:background="@drawable/bg_card"
+    android:clipToOutline="true"
+    android:elevation="4dp">
+
+    <!-- Foto psikolog -->
+    <ImageView
+        android:id="@+id/imgFoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="Foto Psikolog"
+        android:clipToOutline="true" />
+
+    <!-- Overlay teks dan tombol di atas foto -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:background="@drawable/gradient_bottom"
+        android:padding="12dp">
+
+        <!-- Nama psikolog -->
+        <TextView
+            android:id="@+id/tvNama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lee Jeno, Banyumas"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- Deskripsi / Lokasi -->
+        <TextView
+            android:id="@+id/tvLokasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RS Bogor"
+            android:textColor="#E0E0E0"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp" />
+
+        <!-- Tombol kecil di atas foto -->
+        <Button
+            android:id="@+id/btnShow"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:text="Show"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            android:background="@drawable/bg_btn_chat"
+            android:layout_gravity="end"
+            android:layout_marginTop="6dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="2dp" />
+
+    </LinearLayout>
+
+</FrameLayout>

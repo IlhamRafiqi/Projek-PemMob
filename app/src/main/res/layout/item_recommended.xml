@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="230dp"
+    android:layout_margin="8dp"
+    android:background="@drawable/bg_card"
+    android:clipToOutline="true"
+    android:elevation="4dp">
+
+    <!-- Foto psikolog -->
+    <ImageView
+        android:id="@+id/imgFoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="Foto Psikolog"
+        android:clipToOutline="true" />
+
+    <!-- Overlay teks dan tombol di atas foto -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:background="@drawable/gradient_bottom"
+        android:padding="8dp">
+
+        <!-- Nama -->
+        <TextView
+            android:id="@+id/tvNama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jaemin, Bandung"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="13sp" />
+
+        <!-- Deskripsi / lokasi -->
+        <TextView
+            android:id="@+id/tvLokasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RS Bogor"
+            android:textSize="11sp"
+            android:layout_marginTop="2dp"
+            android:textColor="#FFFFFF" />
+
+        <!-- Tombol kecil di atas foto -->
+        <Button
+            android:id="@+id/btnShow"
+            android:layout_width="50dp"
+            android:layout_height="22dp"
+            android:text="Show"
+            android:textColor="#FFFFFF"
+            android:textSize="9sp"
+            android:background="@drawable/bg_btn_chat"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="2dp" />
+    </LinearLayout>
+
+</FrameLayout>
