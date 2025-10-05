@@ -2,6 +2,7 @@ package com.example.sejenakapps.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -43,16 +44,70 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sejenakapps.R
 import com.example.sejenakapps.viewmodel.SejenakViewModel
+import androidx.core.view.WindowCompat
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.runtime.SideEffect
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.runtime.SideEffect
+import android.view.WindowManager
+import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.SideEffect
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class SejenakActivity : ComponentActivity() {
     private val viewModel: SejenakViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Biarkan Compose menggambar seluruh area layar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Hapus semua background window default
+        window.setBackgroundDrawable(null)
+        window.navigationBarColor = android.graphics.Color.TRANSPARENT
+        window.statusBarColor = android.graphics.Color.parseColor("#246BFD") // atas biru
+
+        // Pastikan sistem tidak memaksa warna hitam di bawah
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
         setContent {
-            SejenakApp(viewModel)
+            val systemUiController = rememberSystemUiController()
+
+            SideEffect {
+                // 🔹 Atas mengikuti hero section (biru)
+                systemUiController.setStatusBarColor(
+                    color = Color(0xFF246BFD),
+                    darkIcons = false
+                )
+                // 🔹 Bawah full transparan
+                systemUiController.setNavigationBarColor(
+                    color = Color.Transparent,
+                    darkIcons = true
+                )
+            }
+
+            // 🔹 Bungkus seluruh konten
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Transparent)
+                    .windowInsetsPadding(WindowInsets.navigationBars)
+            ) {
+                SejenakApp(viewModel)
+            }
         }
     }
+
 }
 
 /* ---------- FONT Poppins (pastikan file ada di res/font/) ---------- */
@@ -69,15 +124,19 @@ fun SejenakApp(viewModel: SejenakViewModel) {
     val accentBlue = Color(0xFF246BFD)
 
     Scaffold(
-        // kita pakai custom bottom bar (di bawah)
-        bottomBar = { BottomNav(accentBlue) },
-        containerColor = Color.White
+        bottomBar = {
+            Box(modifier = Modifier.background(Color.Transparent)) {
+                BottomNav(accentBlue)
+            }
+        },
+        containerColor = Color.Transparent
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
+                .background(Color.White) // pertahankan, tapi ini hanya untuk konten scroll
+                .verticalScroll(rememberScrollState())
         ) {
             HeroSection(accentBlue)
             Spacer(modifier = Modifier.height(28.dp))
@@ -86,7 +145,9 @@ fun SejenakApp(viewModel: SejenakViewModel) {
             BenefitSection(accentBlue)
             Spacer(modifier = Modifier.height(24.dp))
             QuoteSection()
-            Spacer(modifier = Modifier.height(120.dp)) // beri ruang sebelum bottom nav
+            Spacer(modifier = Modifier.height(24.dp))
+            ArticleSection(accentBlue)
+            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }
@@ -394,55 +455,144 @@ private fun QuoteSection() {
 }
 
 @Composable
+fun ArticleSection(accentBlue: Color) {
+    // Daftar artikel + gambar
+    val articles = listOf(
+        Pair("Cara Menjaga Kesehatan Mental", R.drawable.artikel1),
+        Pair("Mengenal Gangguan Kecemasan", R.drawable.artikel2),
+        Pair("Tips Mengelola Stres Harian", R.drawable.artikel3),
+        Pair("Pentingnya Istirahat Bagi Kesehatan Mental", R.drawable.artikel4),
+        Pair("Menemukan Dukungan Emosional", R.drawable.artikel5)
+    )
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp)
+    ) {
+        // Judul utama
+        Text(
+            text = "Artikel Terbaru",
+            fontFamily = Poppins,
+            fontWeight = FontWeight.Bold,
+            fontSize = 35.sp, // dua kali lebih besar
+            color = Color(0xFF0D47A1), // biru tua
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 20.dp)
+        )
+
+        // Baris artikel yang dapat digeser
+        Row(
+            modifier = Modifier
+                .horizontalScroll(rememberScrollState())
+        ) {
+            articles.forEach { (title, imageRes) ->
+                Card(
+                    modifier = Modifier
+                        .width(260.dp)
+                        .height(310.dp)
+                        .padding(end = 16.dp),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        // 🔹 Gambar di bagian atas
+                        Image(
+                            painter = painterResource(id = imageRes),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .height(190.dp)
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                        )
+
+                        // 🔹 Teks di bawah gambar
+                        Column(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxSize(),
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = title,
+                                fontFamily = Poppins,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 18.sp,
+                                color = Color.Black,
+                                lineHeight = 22.sp
+                            )
+                            Text(
+                                text = "Read more",
+                                fontFamily = Poppins,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 14.sp,
+                                color = accentBlue
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
 private fun BottomNav(accentBlue: Color) {
     var selected by remember { mutableStateOf(0) }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 24.dp) // jarak dari bawah
-            .background(Color.Transparent), // pastikan transparan
+            .navigationBarsPadding()
+            .padding(bottom = 24.dp),
         contentAlignment = Alignment.Center
     ) {
-        // Card utama (melengkung + shadow)
-        Card(
+        Surface(
             modifier = Modifier
                 .fillMaxWidth(0.9f)
-                .height(70.dp)
+                .height(75.dp)
                 .shadow(
-                    elevation = 20.dp,
+                    elevation = 12.dp,
                     shape = RoundedCornerShape(50.dp),
-                    ambientColor = Color.Black.copy(alpha = 0.25f),
-                    spotColor = Color.Black.copy(alpha = 0.25f)
-                ),
+                    clip = false
+                )
+                .graphicsLayer { alpha = 0.9f }, // efek transparan halus
+            color = Color.White.copy(alpha = 0.6f), // lebih transparan, bukan solid
             shape = RoundedCornerShape(50.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = Color.White.copy(alpha = 0.55f) // semi transparan (hilangkan putih padat)
-            ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+            tonalElevation = 0.dp
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 32.dp),
+                    .padding(horizontal = 36.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 val items = listOf(
-                    Icons.Filled.Home to "Home",
-                    Icons.Filled.Book to "Artikel",
-                    Icons.Filled.Favorite to "Favorit",
-                    Icons.Filled.Person to "Profil"
+                    Icons.Filled.Home,
+                    Icons.Filled.BookmarkBorder,
+                    Icons.Filled.FavoriteBorder,
+                    Icons.Filled.Person
                 )
 
-                items.forEachIndexed { index, (icon, label) ->
-                    BottomIcon(
-                        icon = icon,
-                        label = label,
-                        isSelected = selected == index,
-                        accent = accentBlue
-                    ) {
-                        selected = index
+                items.forEachIndexed { index, icon ->
+                    IconButton(onClick = { selected = index }) {
+                        Icon(
+                            imageVector = icon,
+                            contentDescription = null,
+                            tint = if (selected == index)
+                                accentBlue
+                            else
+                                Color.Gray.copy(alpha = 0.6f),
+                            modifier = Modifier.size(26.dp)
+                        )
                     }
                 }
             }
@@ -451,7 +601,7 @@ private fun BottomNav(accentBlue: Color) {
 }
 
 @Composable
-private fun BottomIcon(
+private fun BottomIconFlat(
     icon: ImageVector,
     label: String,
     isSelected: Boolean,
@@ -462,32 +612,22 @@ private fun BottomIcon(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .width(65.dp)
+            .width(60.dp)
             .clickable { onClick() }
     ) {
-        // Ikon dengan latar bulat halus jika aktif
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .size(44.dp)
-                .clip(CircleShape)
-                .background(if (isSelected) accent.copy(alpha = 0.15f) else Color.Transparent)
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = label,
-                tint = if (isSelected) accent else Color(0xFFB0B8C1),
-                modifier = Modifier.size(24.dp)
-            )
-        }
+        Icon(
+            imageVector = icon,
+            contentDescription = label,
+            tint = if (isSelected) accent else Color(0xFFB4C0CF),
+            modifier = Modifier.size(28.dp)
+        )
 
-        Spacer(modifier = Modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(6.dp))
 
-        // Garis biru kecil di bawah ikon aktif
         if (isSelected) {
             Box(
                 modifier = Modifier
-                    .width(22.dp)
+                    .width(26.dp)
                     .height(4.dp)
                     .clip(RoundedCornerShape(2.dp))
                     .background(accent)
