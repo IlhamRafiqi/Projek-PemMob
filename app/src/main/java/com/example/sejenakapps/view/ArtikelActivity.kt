@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
@@ -27,6 +28,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sejenakapps.R
+import com.example.sejenakapps.ui.BottomNavBar
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+
+
 
 // ---------- FontFamily ----------
 val Poppins = FontFamily(
@@ -38,17 +46,40 @@ val Poppins = FontFamily(
 // ---------- SCREEN ----------
 @Composable
 fun ArticleScreen() {
-    Column(
+    var selectedIndex by remember { mutableStateOf(1) }
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 32.dp, start = 16.dp, end = 16.dp)
+            .background(Color(0xFFF8F6FA))
     ) {
-        HeaderBar()
-        FeaturedArticlesSection()
-        LatestNewsSection()
-        RecommendationTopicSection()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(top = 32.dp, start = 16.dp, end = 16.dp, bottom = 90.dp)
+        ) {
+            HeaderBar()
+            FeaturedArticlesSection()
+            LatestNewsSection()
+            RecommendationTopicSection()
+        }
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 12.dp)
+        ) {
+            BottomNavBar(
+                selectedIndex = selectedIndex,
+                onItemSelected = { index ->
+                    selectedIndex = index
+                }
+            )
+        }
     }
 }
+
 
 // ---------- HEADER BAR ----------
 @Composable

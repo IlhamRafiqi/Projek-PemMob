@@ -31,7 +31,7 @@
 
         <!-- Legacy & Sejenak -->
         <activity android:name=".LegacyMainActivity" android:exported="false" />
-        <activity android:name=".view.SejenakActivity" android:exported="false" />
+        <activity android:name=".view.SejenakActivity" android:exported="true" />
 
         <!-- Quiz & Result -->
         <activity android:name=".QuizActivity" android:exported="false" />
