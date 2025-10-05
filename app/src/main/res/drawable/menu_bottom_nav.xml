@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/logo_sejenak"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_chat"
+        android:icon="@drawable/logo_sejenak"
+        android:title="Chat" />
+    <item
+        android:id="@+id/nav_fav"
+        android:icon="@drawable/logo_sejenak"
+        android:title="Favorite" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/logo_sejenak"
+        android:title="Profile" />
+</menu>
