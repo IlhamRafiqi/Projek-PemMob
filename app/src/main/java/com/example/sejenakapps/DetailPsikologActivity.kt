@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
+
 class DetailPsikologActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,5 +27,5 @@ class DetailPsikologActivity : AppCompatActivity() {
         tvNamaDetail.text = nama
         tvLokasiDetail.text = lokasi
         tvDeskripsiDetail.text = deskripsi
+        }
     }
-}
