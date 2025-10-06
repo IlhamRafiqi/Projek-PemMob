@@ -6,7 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,15 +18,18 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.example.sejenakapps.view.SejenakActivity
+import com.example.sejenakapps.MainActivity
+import com.example.sejenakapps.ArtikelActivity
+import com.example.sejenakapps.InformasiActivity
+
 
 @Composable
 fun BottomNavBar(
     selectedIndex: Int,
     onItemSelected: (Int) -> Unit,
-    accentBlue: Color = Color(0xFF246BFD)
+    accentColor: Color = Color(0xFF0ABAB5) // Warna toska lembut
 ) {
-    val context = LocalContext.current // 🔹 untuk intent
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier
@@ -38,7 +42,7 @@ fun BottomNavBar(
             )
             .clip(RoundedCornerShape(50.dp))
     ) {
-        // 🔹 Lapisan bawah — efek kaca
+        // 🔹 Latar belakang kaca transparan
         Box(
             modifier = Modifier
                 .matchParentSize()
@@ -46,14 +50,14 @@ fun BottomNavBar(
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            Color.White.copy(alpha = 0.6f),
+                            Color.White.copy(alpha = 0.7f),
                             Color.White.copy(alpha = 0.4f)
                         )
                     )
                 )
         )
 
-        // 🔹 Lapisan atas — ikon tetap tajam
+        // 🔹 Deretan ikon navigasi
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -61,11 +65,12 @@ fun BottomNavBar(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Urutan ikon: Home, Artikel, Informasi, Tentang Kami
             val items = listOf(
-                Icons.Filled.Home,
-                Icons.Filled.BookmarkBorder,
-                Icons.Filled.FavoriteBorder,
-                Icons.Filled.Person
+                Icons.Filled.Home,        // index 0 - Sejenak (Home)
+                Icons.Filled.Bookmark,    // index 1 - Artikel
+                Icons.Filled.Favorite,    // index 2 - Informasi
+                Icons.Filled.Person       // index 3 - Tentang Kami
             )
 
             items.forEachIndexed { index, icon ->
@@ -77,10 +82,24 @@ fun BottomNavBar(
                         onClick = {
                             onItemSelected(index)
 
-                            // 🔹 Navigasi pakai Intent
-                            if (index == 0) {
-                                val intent = Intent(context, SejenakActivity::class.java)
-                                context.startActivity(intent)
+                            // 🔹 Navigasi Activity
+                            when (index) {
+                                0 -> {
+                                    val intent = Intent(context, MainActivity::class.java)
+                                    context.startActivity(intent)
+                                }
+                                1 -> {
+                                    val intent = Intent(context, ArtikelActivity::class.java)
+                                    context.startActivity(intent)
+                                }
+                                2 -> {
+                                    val intent = Intent(context, InformasiActivity::class.java)
+                                    context.startActivity(intent)
+                                }
+                                3 -> {
+//                                    val intent = Intent(context, TentangKamiActivity::class.java)
+//                                    context.startActivity(intent)
+                                }
                             }
                         }
                     ) {
@@ -88,20 +107,21 @@ fun BottomNavBar(
                             imageVector = icon,
                             contentDescription = null,
                             tint = if (selectedIndex == index)
-                                accentBlue
+                                accentColor
                             else
                                 Color(0xFFB4C0CF),
                             modifier = Modifier.size(28.dp)
                         )
                     }
 
+                    // 🔹 Garis indikator bawah ikon aktif
                     if (selectedIndex == index) {
                         Box(
                             modifier = Modifier
                                 .width(24.dp)
                                 .height(3.dp)
                                 .clip(RoundedCornerShape(50))
-                                .background(accentBlue)
+                                .background(accentColor)
                         )
                     } else {
                         Spacer(modifier = Modifier.height(3.dp))

@@ -36,6 +36,12 @@
         <!-- Quiz & Result -->
         <activity android:name=".QuizActivity" android:exported="false" />
         <activity android:name=".ResultActivity" android:exported="false" />
+        <activity
+            android:name=".ArtikelActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SejenakApps" />
+
+
 
         <activity android:name=".InformasiActivity" android:exported="false" />
         <activity android:name=".DetailPsikologActivity" android:exported="false" />
