@@ -18,9 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.sejenakapps.view.SejenakActivity
-import com.example.sejenakapps.view.ArtikelActivity
-import com.example.sejenakapps.InformasiActivity
-
 
 @Composable
 fun BottomNavBar(
@@ -77,20 +74,15 @@ fun BottomNavBar(
                     verticalArrangement = Arrangement.Center
                 ) {
                     IconButton(
-                        IconButton(
-                            onClick = {
-                                onItemSelected(index)
-                                val intent = when (index) {
-                                    0 -> Intent(context, SejenakActivity::class.java)
-                                    1 -> Intent(context, ArtikelActivity::class.java)
-                                    2 -> Intent(context, InformasiActivity::class.java)
-                                    // 3 -> Intent(context, ProfileActivity::class.java)
-                                    else -> null
-                                }
-                                intent?.let { context.startActivity(it) }
-                            }
-                        )
+                        onClick = {
+                            onItemSelected(index)
 
+                            // 🔹 Navigasi pakai Intent
+                            if (index == 0) {
+                                val intent = Intent(context, SejenakActivity::class.java)
+                                context.startActivity(intent)
+                            }
+                        }
                     ) {
                         Icon(
                             imageVector = icon,

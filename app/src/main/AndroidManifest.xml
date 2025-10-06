@@ -16,11 +16,11 @@
         <!-- Login sebagai halaman pertama -->
         <activity
             android:name=".LoginActivity"
-            android:exported="false">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            android:exported="true">
+           <intent-filter>
+               <action android:name="android.intent.action.MAIN" />
+               <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!-- Register -->
@@ -37,13 +37,8 @@
         <activity android:name=".QuizActivity" android:exported="false" />
         <activity android:name=".ResultActivity" android:exported="false" />
 
-        <activity android:name=".InformasiActivity" android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".DetailPsikologActivity" />
+        <activity android:name=".InformasiActivity" android:exported="false" />
+        <activity android:name=".DetailPsikologActivity" android:exported="false" />
 
 
     </application>
