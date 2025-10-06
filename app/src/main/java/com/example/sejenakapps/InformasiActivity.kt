@@ -9,12 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import androidx.compose.ui.platform.ComposeView
 import com.example.sejenakapps.adapter.ObatSliderAdapter
 import com.example.sejenakapps.adapter.PsikologAdapter
 import com.example.sejenakapps.adapter.RecommendedAdapter
 import com.example.sejenakapps.adapter.RecommendedObatAdapter
 import com.example.sejenakapps.model.ObatModel
 import com.example.sejenakapps.model.PsikologModel
+import com.example.sejenakapps.ui.BottomNavBar
 
 class InformasiActivity : AppCompatActivity() {
 
@@ -63,7 +65,6 @@ class InformasiActivity : AppCompatActivity() {
             )
         )
 
-
         // ===============================
         // Dummy Data Obat
         // ===============================
@@ -78,28 +79,24 @@ class InformasiActivity : AppCompatActivity() {
                 "Sandepril",
                 "Mengatasi depresi ringan hingga berat",
                 R.drawable.sandepril,
-                "https://www.alodokter.com/sandepril?utm_source=chatgpt.com"
+                "https://www.alodokter.com/sandepril"
             ),
             ObatModel(
                 "Alprazolam",
                 "Meredakan kecemasan dan gangguan tidur",
                 R.drawable.alprazolam,
-                "https://www.alodokter.com/alprazolam?utm_source=chatgpt.com"
+                "https://www.alodokter.com/alprazolam"
             ),
             ObatModel(
                 "Frimania",
                 "Mengatasi depresif pada gangguan bipolar",
                 R.drawable.frimania,
                 "https://www.klikdokter.com/obat/obat-gangguan-saraf-pusat/frimania"
-
             )
-
-
         )
 
-
+        // tampil default Psikolog
         showPsikolog(listPsikolog)
-
 
         tabPsikolog.setOnClickListener {
             showPsikolog(listPsikolog)
@@ -112,18 +109,31 @@ class InformasiActivity : AppCompatActivity() {
             tabObat.setTextColor(Color.parseColor("#2757A5"))
             tabPsikolog.setTextColor(Color.parseColor("#9E9E9E"))
         }
+
+        // ===============================
+        // Bottom Navigation Bar (Jetpack Compose)
+        // ===============================
+        val composeBottomNav = findViewById<ComposeView>(R.id.composeBottomNav)
+        composeBottomNav.setContent {
+            BottomNavBar(
+                selectedIndex = 1, // halaman aktif = Informasi
+                onItemSelected = { index ->
+                    when (index) {
+
+                    }
+                }
+            )
+        }
     }
 
     // ===============================
     // Fungsi menampilkan Psikolog
     // ===============================
     private fun showPsikolog(listPsikolog: List<PsikologModel>) {
-        // Slider Psikolog
         viewPager.adapter = PsikologAdapter(listPsikolog)
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         viewPager.isUserInputEnabled = true
 
-        // RecyclerView Rekomendasi Psikolog
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.adapter = RecommendedAdapter(listPsikolog, object : RecommendedAdapter.OnItemClickListener {
             override fun onShowClicked(psikolog: PsikologModel) {

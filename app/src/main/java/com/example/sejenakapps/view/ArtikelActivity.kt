@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
@@ -27,6 +28,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sejenakapps.R
+import com.example.sejenakapps.ui.BottomNavBar
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.clickable
+import androidx.compose.ui.platform.LocalContext
+
+
+
 
 // ---------- FontFamily ----------
 val Poppins = FontFamily(
@@ -38,17 +51,40 @@ val Poppins = FontFamily(
 // ---------- SCREEN ----------
 @Composable
 fun ArticleScreen() {
-    Column(
+    var selectedIndex by remember { mutableStateOf(1) }
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 32.dp, start = 16.dp, end = 16.dp)
+            .background(Color(0xFFF8F6FA))
     ) {
-        HeaderBar()
-        FeaturedArticlesSection()
-        LatestNewsSection()
-        RecommendationTopicSection()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(top = 32.dp, start = 16.dp, end = 16.dp, bottom = 90.dp)
+        ) {
+            HeaderBar()
+            FeaturedArticlesSection()
+            LatestNewsSection()
+            RecommendationTopicSection()
+        }
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 12.dp)
+        ) {
+            BottomNavBar(
+                selectedIndex = selectedIndex,
+                onItemSelected = { index ->
+                    selectedIndex = index
+                }
+            )
+        }
     }
 }
+
 
 // ---------- HEADER BAR ----------
 @Composable
@@ -102,12 +138,34 @@ fun HeaderBar(
 
 @Composable
 fun FeaturedArticlesSection() {
+    val context = LocalContext.current
+
     val articles = listOf(
-        Pair(R.drawable.artikel1, "Cara Menjaga Kesehatan Mental"),
-        Pair(R.drawable.artikel2, "Mengenal Gangguan Kecemasan"),
-        Pair(R.drawable.artikel3, "Tips Mengelola Stres Harian"),
-        Pair(R.drawable.artikel4, "Pentingnya Istirahat yang Cukup"),
-        Pair(R.drawable.artikel5, "Menjaga Pola Hidup Sehat")
+        Triple(
+            R.drawable.artikel1,
+            "Cara Menjaga Kesehatan Mental",
+            "https://share.google/gmLmVUs8SfZ5qdvr2"
+        ),
+        Triple(
+            R.drawable.artikel2,
+            "Mengenal Gangguan Kecemasan",
+            "https://www.alodokter.com/kenali-tiga-jenis-gangguan-kecemasan-dan-gejalanya"
+        ),
+        Triple(
+            R.drawable.artikel3,
+            "Tips Mengelola Stres Harian",
+            "https://www.alodokter.com/ternyata-tidak-sulit-mengatasi-stres"
+        ),
+        Triple(
+            R.drawable.artikel4,
+            "Pentingnya Istirahat yang Cukup",
+            "https://ners.unair.ac.id/site/index.php/news-fkp-unair/30-lihat/1047-pentingnya-istirahat-yang-cukup"
+        ),
+        Triple(
+            R.drawable.artikel5,
+            "Menjaga Pola Hidup Sehat",
+            "https://www.alodokter.com/delapan-langkah-menuju-pola-hidup-sehat"
+        )
     )
 
     Row(
@@ -116,7 +174,7 @@ fun FeaturedArticlesSection() {
             .horizontalScroll(rememberScrollState())
             .padding(horizontal = 16.dp, vertical = 16.dp)
     ) {
-        articles.forEach { (imageRes, title) ->
+        articles.forEach { (imageRes, title, url) ->
             Box(
                 modifier = Modifier
                     .width(320.dp)
@@ -134,14 +192,14 @@ fun FeaturedArticlesSection() {
                         .clip(RoundedCornerShape(20.dp))
                 )
 
-                // 🔹 Overlay gelap lembut di atas gambar
+                // 🔹 Overlay gelap lembut
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.25f)) // 🌙 sedikit gelap (0.25 = 25%)
+                        .background(Color.Black.copy(alpha = 0.25f))
                 )
 
-                // 🔹 Gradasi hitam bagian bawah gambar
+                // 🔹 Gradasi hitam bawah
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
@@ -166,7 +224,7 @@ fun FeaturedArticlesSection() {
                         .padding(start = 16.dp, bottom = 32.dp)
                 )
 
-                // 🔹 Tulisan "Read more"
+                // 🔹 Tombol "Read more" — klik buka link
                 Text(
                     text = "Read more",
                     color = Color.White.copy(alpha = 0.9f),
@@ -175,17 +233,32 @@ fun FeaturedArticlesSection() {
                     modifier = Modifier
                         .align(Alignment.BottomStart)
                         .padding(start = 16.dp, bottom = 10.dp)
+                        .clickable {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            context.startActivity(intent)
+                        }
                 )
             }
         }
     }
 }
 
+
 @Composable
 fun LatestNewsSection() {
+    val context = LocalContext.current
+
     val newsArticles = listOf(
-        Pair(R.drawable.artikel6, "5 Rekomendasi destinasi wisata untuk menjaga kesehatan mental"),
-        Pair(R.drawable.artikel7, "Menjaga Kesehatan dengan Olahraga")
+        Triple(
+            R.drawable.artikel6,
+            "5 Rekomendasi destinasi wisata untuk menjaga kesehatan mental",
+            "https://www.ladiestory.id/5-wisata-lokal-yang-baik-untuk-menjaga-kesehatan-mental-55723"
+        ),
+        Triple(
+            R.drawable.artikel7,
+            "Menjaga Kesehatan dengan Olahraga",
+            "https://www.alodokter.com/beragam-manfaat-olahraga"
+        )
     )
 
     Column(
@@ -213,7 +286,7 @@ fun LatestNewsSection() {
                 text = "View All",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF004AAD) // biru tua
+                color = Color(0xFF004AAD)
             )
         }
 
@@ -224,11 +297,15 @@ fun LatestNewsSection() {
                 .horizontalScroll(rememberScrollState())
                 .padding(start = 16.dp, top = 12.dp, bottom = 8.dp)
         ) {
-            newsArticles.forEach { (imageRes, title) ->
+            newsArticles.forEach { (imageRes, title, url) ->
                 Column(
                     modifier = Modifier
                         .width(220.dp)
                         .padding(end = 16.dp)
+                        .clickable {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            context.startActivity(intent)
+                        }
                 ) {
                     Box(
                         modifier = Modifier
@@ -266,11 +343,22 @@ fun LatestNewsSection() {
     }
 }
 
+
 @Composable
 fun RecommendationTopicSection() {
+    val context = LocalContext.current
+
     val recommendations = listOf(
-        Pair(R.drawable.artikel8, "3 Makanan untuk Kesehatan Mental Lebih Baik"),
-        Pair(R.drawable.artikel9, "Hindari Lingkungan Toxic !")
+        Triple(
+            R.drawable.artikel8,
+            "3 Makanan untuk Kesehatan Mental Lebih Baik",
+            "https://hellosehat.com/mental/stres/makanan-untuk-kesehatan-jiwa/"
+        ),
+        Triple(
+            R.drawable.artikel9,
+            "Hindari Lingkungan Toxic !",
+            "https://alive.generali.co.id/blog/detail/menghindari-lingkungan-yang-toxic"
+        )
     )
 
     Column(
@@ -298,7 +386,7 @@ fun RecommendationTopicSection() {
                 text = "View All",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF004AAD) // biru tua
+                color = Color(0xFF004AAD)
             )
         }
 
@@ -308,11 +396,15 @@ fun RecommendationTopicSection() {
                 .fillMaxWidth()
                 .padding(top = 12.dp)
         ) {
-            recommendations.forEach { (imageRes, title) ->
+            recommendations.forEach { (imageRes, title, url) ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .clickable {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            context.startActivity(intent)
+                        },
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column(
@@ -349,4 +441,5 @@ fun RecommendationTopicSection() {
         }
     }
 }
+
 
