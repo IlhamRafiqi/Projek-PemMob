@@ -37,22 +37,44 @@ fun Modifier.Companion.align(bottomCenter: Alignment): Any {
 
 @Composable
 fun TentangScreen() {
-    // 🔹 Semua konten bisa di-scroll
-    Column(
+    var selectedIndex = 3 // index 3 karena ini halaman Tentang Kami
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .verticalScroll(rememberScrollState())
     ) {
-        HeaderTentang()
-        Spacer(modifier = Modifier.height(30.dp))
-        LogoSection()
-        InfoCardSection()
-        TentangImageSection()
-        Spacer(modifier = Modifier.height(60.dp))
-    }
+        // 🔹 Konten utama (scrollable)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 80.dp) // biar gak ketutupan navbar
+        ) {
+            HeaderTentang()
+            Spacer(modifier = Modifier.height(30.dp))
+            LogoSection()
+            InfoCardSection()
+            TentangImageSection()
+            Spacer(modifier = Modifier.height(60.dp))
+        }
 
+        // 🔹 Bottom Navigation Bar di bawah layar
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+        ) {
+            BottomNavBar(
+                selectedIndex = selectedIndex,
+                onItemSelected = { newIndex ->
+                    selectedIndex = newIndex
+                }
+            )
+        }
+    }
 }
+
 
 
 /* ---------- FONT ---------- */

@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.sejenakapps.view.SejenakActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -32,14 +33,6 @@ class RegisterActivity : AppCompatActivity() {
         private const val RC_SIGN_IN = 1002
     }
 
-    override fun onStart() {
-        super.onStart()
-        firebaseAuth = FirebaseAuth.getInstance()
-        if (firebaseAuth.currentUser != null) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -141,7 +134,7 @@ class RegisterActivity : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(credential)
             .addOnSuccessListener {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, SejenakActivity::class.java))
                 finish()
             }
             .addOnFailureListener { error ->
