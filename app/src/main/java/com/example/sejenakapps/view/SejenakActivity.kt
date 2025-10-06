@@ -43,6 +43,10 @@ import com.example.sejenakapps.ui.BottomNavBar
 import com.example.sejenakapps.viewmodel.SejenakViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.example.sejenakapps.ui.BottomNavBar
+import android.content.Intent
+import com.example.sejenakapps.QuizActivity
+import androidx.compose.ui.platform.LocalContext
+
 
 class SejenakActivity : ComponentActivity() {
     private val viewModel: SejenakViewModel by viewModels()
@@ -173,34 +177,68 @@ fun HeroSection(accentBlue: Color) {
 /* ---------- TEST SECTION ---------- */
 @Composable
 private fun TestSection(accentBlue: Color) {
+    val context = LocalContext.current
+
     Column(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 28.dp, vertical = 10.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 28.dp, vertical = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Tes Kesehatan Mental", fontFamily = Poppins, fontWeight = FontWeight.Bold, fontSize = 28.sp, color = accentBlue)
-        Text("kamu, Yuk!", fontFamily = Poppins, fontWeight = FontWeight.Bold, fontSize = 28.sp, color = accentBlue, modifier = Modifier.offset(y = (-10).dp))
+        Text(
+            "Tes Kesehatan Mental",
+            fontFamily = Poppins,
+            fontWeight = FontWeight.Bold,
+            fontSize = 28.sp,
+            color = accentBlue
+        )
+        Text(
+            "kamu, Yuk!",
+            fontFamily = Poppins,
+            fontWeight = FontWeight.Bold,
+            fontSize = 28.sp,
+            color = accentBlue,
+            modifier = Modifier.offset(y = (-10).dp)
+        )
         Spacer(modifier = Modifier.height(30.dp))
         Text(
             "Ikuti tes untuk mendapatkan skor kesehatan mental kamu",
-            fontFamily = Poppins, fontSize = 16.sp, color = Color(0xFF6B6B6B), textAlign = TextAlign.Center, lineHeight = 22.sp
+            fontFamily = Poppins,
+            fontSize = 16.sp,
+            color = Color(0xFF6B6B6B),
+            textAlign = TextAlign.Center,
+            lineHeight = 22.sp
         )
         Spacer(modifier = Modifier.height(40.dp))
+
+        // 🔹 Tombol menuju QuizActivity
         Box(
-            modifier = Modifier.height(64.dp).fillMaxWidth(0.7f)
+            modifier = Modifier
+                .height(64.dp)
+                .fillMaxWidth(0.7f)
                 .shadow(10.dp, RoundedCornerShape(40.dp))
                 .clip(RoundedCornerShape(40.dp))
                 .background(accentBlue)
-                .clickable { },
+                .clickable {
+                    val intent = Intent(context, QuizActivity::class.java)
+                    context.startActivity(intent)
+                },
             contentAlignment = Alignment.Center
         ) {
             Text(
                 "Tes Kesehatan Mental\nSekarang !",
-                fontFamily = Poppins, fontWeight = FontWeight.SemiBold, fontSize = 18.sp, color = Color.White, textAlign = TextAlign.Center
+                fontFamily = Poppins,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 18.sp,
+                color = Color.White,
+                textAlign = TextAlign.Center
             )
         }
+
         Spacer(modifier = Modifier.height(3.dp))
     }
 }
+
 
 /* ---------- BENEFIT SECTION ---------- */
 @Composable
