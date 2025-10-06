@@ -37,7 +37,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onStart()
         firebaseAuth = FirebaseAuth.getInstance()
         if (firebaseAuth.currentUser != null) {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, SejenakActivity::class.java))
             finish()
         }
     }
