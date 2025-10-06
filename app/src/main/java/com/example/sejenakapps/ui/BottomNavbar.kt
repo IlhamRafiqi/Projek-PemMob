@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.sejenakapps.MainActivity
 import com.example.sejenakapps.ArtikelActivity
+import com.example.sejenakapps.TentangActivity
 import com.example.sejenakapps.InformasiActivity
 
 
@@ -97,8 +98,8 @@ fun BottomNavBar(
                                     context.startActivity(intent)
                                 }
                                 3 -> {
-//                                    val intent = Intent(context, TentangKamiActivity::class.java)
-//                                    context.startActivity(intent)
+                                    val intent = Intent(context, TentangActivity::class.java)
+                                    context.startActivity(intent)
                                 }
                             }
                         }

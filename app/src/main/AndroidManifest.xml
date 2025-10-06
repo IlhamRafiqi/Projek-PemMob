@@ -31,7 +31,7 @@
 
         <!-- Legacy & Sejenak -->
         <activity android:name=".LegacyMainActivity" android:exported="false" />
-        <activity android:name=".view.SejenakActivity" android:exported="true" />
+        <activity android:name=".view.SejenakActivity" android:exported="false" />
 
         <!-- Quiz & Result -->
         <activity android:name=".QuizActivity" android:exported="false" />
@@ -40,8 +40,10 @@
             android:name=".ArtikelActivity"
             android:exported="false"
             android:theme="@style/Theme.SejenakApps" />
-
-
+        <activity
+            android:name=".TentangActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SejenakApps" />
 
         <activity android:name=".InformasiActivity" android:exported="false" />
         <activity android:name=".DetailPsikologActivity" android:exported="false" />
