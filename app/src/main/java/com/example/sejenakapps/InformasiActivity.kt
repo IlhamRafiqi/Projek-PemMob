@@ -28,6 +28,7 @@ class InformasiActivity : AppCompatActivity() {
         setContentView(R.layout.activity_informasi)
 
         viewPager = findViewById(R.id.viewPagerPsikolog)
+
         recyclerView = findViewById(R.id.rvRecommended)
         tabPsikolog = findViewById(R.id.tabPsikolog)
         tabObat = findViewById(R.id.tabObat)
