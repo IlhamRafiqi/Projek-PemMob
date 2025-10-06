@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.example.sejenakapps.MainActivity
+import com.example.sejenakapps.view.SejenakActivity
 import com.example.sejenakapps.ArtikelActivity
 import com.example.sejenakapps.TentangActivity
 import com.example.sejenakapps.InformasiActivity
@@ -86,7 +86,7 @@ fun BottomNavBar(
                             // 🔹 Navigasi Activity
                             when (index) {
                                 0 -> {
-                                    val intent = Intent(context, MainActivity::class.java)
+                                    val intent = Intent(context, SejenakActivity::class.java)
                                     context.startActivity(intent)
                                 }
                                 1 -> {
