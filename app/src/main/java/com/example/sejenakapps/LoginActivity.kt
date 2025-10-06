@@ -30,15 +30,6 @@ class LoginActivity : AppCompatActivity() {
         private const val RC_SIGN_IN = 1001
     }
 
-    override fun onStart() {
-        super.onStart()
-        firebaseAuth = FirebaseAuth.getInstance()
-        if (firebaseAuth.currentUser != null) {
-            // 🔹 Langsung menuju ke SejenakActivity jika user sudah login
-            startActivity(Intent(this, SejenakActivity::class.java))
-            finish()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
